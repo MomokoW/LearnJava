@@ -13,11 +13,7 @@ import java.util.TreeMap;
  */
 public class TreeMapTest {
     public static void main(String[] args) {
-        Map<Person, Integer> map = new TreeMap<>(new Comparator<Person>() {
-            public int compare(Person p1, Person p2) {
-                return p1.name.compareTo(p2.name);
-            }
-        });
+        Map<Person, Integer> map = new TreeMap<>(Comparator.comparing(p -> p.name));
         map.put(new Person("Tom"), 1);
         map.put(new Person("Bob"), 2);
         map.put(new Person("Lily"), 3);
@@ -28,12 +24,7 @@ public class TreeMapTest {
         System.out.println(map.get(new Person("Bob"))); // 2
 
 
-        Map<Student,Integer> map2 = new TreeMap<>(new Comparator<Student>() {
-            @Override
-            public int compare(Student o1, Student o2) {
-                return Integer.compare(o1.score,o2.score);
-            }
-        });
+        Map<Student,Integer> map2 = new TreeMap<>(Comparator.comparingInt(o -> o.score));
         map2.put(new Student("Tom", 77), 1);
         map2.put(new Student("Bob", 66), 2);
         map2.put(new Student("Lily", 99), 3);

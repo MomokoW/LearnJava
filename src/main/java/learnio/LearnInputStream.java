@@ -33,8 +33,29 @@ public class LearnInputStream {
         }
     }
 
+    public static String readAsString(InputStream input) {
+        int n;
+        StringBuilder sb = new StringBuilder();
+        while (true) {
+            try {
+                if ((n = input.read()) == -1) break;
+                sb.append((char) n);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) throws IOException {
-        readWriteFile("src/main/java/learnio/IO.md","/Users/momoko/Downloads/test.md");
+//        readWriteFile("src/main/java/learnio/IO.md", "/Users/momoko/Downloads/test.md");
+        byte[] data = { 72, 101, 108, 108, 111, 33 };
+        try (InputStream input = new ByteArrayInputStream(data)) {
+            String s = readAsString(input);
+            System.out.println(s);
+        }
     }
 
 }

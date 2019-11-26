@@ -31,7 +31,6 @@ public class LearnTreeSet {
     }
 
     static List<Message> process(List<Message> received) {
-        // TODO: 按sequence去除重复消息
         Set<Message> set = new HashSet<>();
         set.addAll(received);
         received = new ArrayList<>();

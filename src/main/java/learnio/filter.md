@@ -52,12 +52,14 @@ Java的IO标准库提供的<kbd>InputStream</kbd>根据来源可以包括：
 - ByteArrayInputStream
 - ServletInputStream
 - ...
+
   一类是提供额外附加功能的<kbd>InputStream</kbd>，例如：
 
 - BufferedInputStream
 - DigestInputStream
 - CipherInputStream
 - ...
+
   当我们需要给一个“基础”<kbd>InputStream</kbd>附加各种功能时，我们先确定这个能提供数据源的<kbd>InputStream</kbd>，因为我们需要的数据总得来自某个地方，例如，<kbd>FileInputStream</kbd>，数据来源自文件：
 
 ```InputStream file = new FileInputStream("test.gz");```

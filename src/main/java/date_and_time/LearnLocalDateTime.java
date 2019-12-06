@@ -1,9 +1,6 @@
 package date_and_time;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 
@@ -23,20 +20,20 @@ public class LearnLocalDateTime {
         System.out.println(t);
         System.out.println(dt);
 
-        LocalDate d2 = LocalDate.of(2019, 12, 05);
-        LocalTime t2 = LocalTime.of(17, 00, 00);
+        LocalDate d2 = LocalDate.of(2019, 12, 5);
+        LocalTime t2 = LocalTime.of(17, 0, 0);
         LocalDateTime dt2 = LocalDateTime.of(d2, t2);
         System.out.println(dt2);
 
 
-        /**
-         * 注意ISO 8601规定的日期和时间分隔符是T。标准格式如下：
-         *
-         * 日期：yyyy-MM-dd
-         * 时间：HH:mm:ss
-         * 带毫秒的时间：HH:mm:ss.SSS
-         * 日期和时间：yyyy-MM-dd'T'HH:mm:ss
-         * 带毫秒的日期和时间：yyyy-MM-dd'T'HH:mm:ss.SSS
+        /*
+          注意ISO 8601规定的日期和时间分隔符是T。标准格式如下：
+
+          日期：yyyy-MM-dd
+          时间：HH:mm:ss
+          带毫秒的时间：HH:mm:ss.SSS
+          日期和时间：yyyy-MM-dd'T'HH:mm:ss
+          带毫秒的日期和时间：yyyy-MM-dd'T'HH:mm:ss.SSS
          */
 
         LocalDateTime dt3 = LocalDateTime.parse("2019-11-19T15:16:17");
@@ -56,15 +53,15 @@ public class LearnLocalDateTime {
         LocalDateTime dt5 = dt4.plusDays(1).minusHours(3).plusDays(2);
         System.out.println(dt5);
 
-        /**
-         * 对日期和时间进行调整则使用withXxx()方法
-         *
-         * 调整年：withYear()
-         * 调整月：withMonth()
-         * 调整日：withDayOfMonth()
-         * 调整时：withHour()
-         * 调整分：withMinute()
-         * 调整秒：withSecond()
+        /*
+          对日期和时间进行调整则使用withXxx()方法
+
+          调整年：withYear()
+          调整月：withMonth()
+          调整日：withDayOfMonth()
+          调整时：withHour()
+          调整分：withMinute()
+          调整秒：withSecond()
          */
         LocalDateTime dt6 = dt4.withDayOfMonth(31);
         System.out.println(dt6);
@@ -95,5 +92,18 @@ public class LearnLocalDateTime {
         System.out.println(now.isBefore(target));
         System.out.println(LocalDate.now().isBefore(LocalDate.of(2019, 11, 19)));
         System.out.println(LocalTime.now().isAfter(LocalTime.parse("08:15:00")));
+
+        //Duration表示两个时刻之间的时间间隔。另一个类似的Period表示两个日期之间的天数
+        LocalDateTime oneTime = LocalDateTime.of(2019, 12, 6, 11, 22, 33);
+        LocalDateTime seconTime = LocalDateTime.of(2019, 12, 8, 11, 44, 55);
+        Duration duration = Duration.between(oneTime, seconTime);
+        System.out.println(duration);
+        Period until = LocalDate.of(2019, 11, 29).until(LocalDate.of(2019, 12, 6));
+        System.out.println(until);
+
+        Duration duration1 = Duration.ofHours(10); // 10 hours
+        Duration duration2 = Duration.parse("P1DT2H3M"); // 1 day, 2 hours, 3 minutes
+
+
     }
 }

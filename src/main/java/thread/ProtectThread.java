@@ -16,7 +16,7 @@ package thread;
  */
 public class ProtectThread {
     public static void main(String[] args) {
-        Thread t = new Thread1();
+        Thread t = new Thread3();
         // 如果注释下一行，观察Thread1的执行情况:
 //        t.setDaemon(true);
         t.start();
@@ -30,7 +30,7 @@ public class ProtectThread {
 
 }
 
-class Thread1 extends Thread {
+class Thread3 extends Thread {
 
     public void run() {
         int n = 0;

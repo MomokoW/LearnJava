@@ -14,7 +14,7 @@ public class VersionCheck {
         String[] oldV = oldVer.split("\\.");
         String[] newV = newVer.split("\\.");
         int len = Math.min(oldV.length, newV.length);
-        int result = 0;
+        int result;
         int i;
         for (i = 0; i < len; i++) {
             if (isNumber(oldV[i]) && isNumber(newV[i])) {
@@ -31,8 +31,10 @@ public class VersionCheck {
         }
         if (oldV.length == newV.length) {
             result = 0;
-        } else
+        } else if(oldV.length < newV.length)
             result = 0 - Integer.parseInt(newV[i + 1]);
+        else
+            result = Integer.parseInt(oldV[i + 1]);
         return result;
     }
 

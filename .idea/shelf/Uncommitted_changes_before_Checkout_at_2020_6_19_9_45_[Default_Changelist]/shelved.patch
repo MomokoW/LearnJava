@@ -1,0 +1,633 @@
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n\r\n    <groupId>com.momoko</groupId>\r\n    <artifactId>LearnJava</artifactId>\r\n    <version>1.0-SNAPSHOT</version>\r\n    <build>\r\n        <plugins>\r\n            <plugin>\r\n                <groupId>org.apache.maven.plugins</groupId>\r\n                <artifactId>maven-compiler-plugin</artifactId>\r\n                <configuration>\r\n                    <source>8</source>\r\n                    <target>8</target>\r\n                </configuration>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n    <dependencies>\r\n        <dependency>\r\n            <groupId>org.junit.jupiter</groupId>\r\n            <artifactId>junit-jupiter</artifactId>\r\n            <version>RELEASE</version>\r\n            <scope>test</scope>\r\n        </dependency>\r\n    </dependencies>\r\n\r\n\r\n</project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pom.xml	(revision ca54aca9003a74ad65675b3a8ec5f7eec904febb)
++++ pom.xml	(date 1590976148387)
+@@ -7,14 +7,15 @@
+     <groupId>com.momoko</groupId>
+     <artifactId>LearnJava</artifactId>
+     <version>1.0-SNAPSHOT</version>
++
+     <build>
+         <plugins>
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-compiler-plugin</artifactId>
+                 <configuration>
+-                    <source>8</source>
+-                    <target>8</target>
++                    <source>14</source>
++                    <target>14</target>
+                 </configuration>
+             </plugin>
+         </plugins>
+@@ -26,6 +27,8 @@
+             <version>RELEASE</version>
+             <scope>test</scope>
+         </dependency>
++
++
+     </dependencies>
+ 
+ 
+Index: src/main/java/before/VectorDemo.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package before;\r\n\r\nimport java.util.Enumeration;\r\nimport java.util.Vector;\r\n\r\n/**\r\n * Created by sunyuqing on 2019/9/18.\r\n */\r\npublic class VectorDemo {\r\n    public static void main(String[] args) {\r\n        Vector v = new Vector(3,2);\r\n        System.out.println(\"Initial size:\"+v.size());\r\n        System.out.println(\"Initial capacity:\"+v.capacity());\r\n        v.addElement(new Integer(1));\r\n        v.addElement(new Integer(2));\r\n        v.addElement(new Integer(3));\r\n        v.addElement(new Integer(4));\r\n        System.out.println(\"Capacity after four additions: \" +\r\n                v.capacity());\r\n        v.addElement(new Double(5.45));\r\n        System.out.println(\"Current capacity: \" +\r\n                v.capacity());\r\n        v.addElement(new Double(6.08));\r\n        v.addElement(new Integer(7));\r\n        System.out.println(\"Current capacity: \" +\r\n                v.capacity());\r\n        v.addElement(new Float(9.4));\r\n        v.addElement(new Integer(10));\r\n        System.out.println(\"Current capacity: \" +\r\n                v.capacity());v.addElement(new Integer(11));\r\n        v.addElement(new Integer(12));\r\n        System.out.println(\"First element: \" +\r\n                (Integer)v.firstElement());\r\n        System.out.println(\"Last element: \" +\r\n                (Integer)v.lastElement());\r\n        if(v.contains(new Integer(3)))\r\n            System.out.println(\"Vector contains 3.\");\r\n        // enumerate the elements in the vector.\r\n        Enumeration vEnum = v.elements();\r\n        System.out.println(\"\\nElements in vector:\");\r\n        while(vEnum.hasMoreElements())\r\n            System.out.print(vEnum.nextElement() + \" \");\r\n        System.out.println();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/before/VectorDemo.java	(revision ca54aca9003a74ad65675b3a8ec5f7eec904febb)
++++ src/main/java/before/VectorDemo.java	(date 1592456032419)
+@@ -42,4 +42,5 @@
+             System.out.print(vEnum.nextElement() + " ");
+         System.out.println();
+     }
++
+ }
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/jarRepositories.xml	(date 1590976065399)
++++ .idea/jarRepositories.xml	(date 1590976065399)
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Central Repository" />
++      <option name="url" value="http://maven.aliyun.com/nexus/content/repositories/central/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/libraries/bcprov_jdk15on_164.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/bcprov_jdk15on_164.xml	(date 1590377420145)
++++ .idea/libraries/bcprov_jdk15on_164.xml	(date 1590377420145)
+@@ -0,0 +1,9 @@
++<component name="libraryTable">
++  <library name="bcprov-jdk15on-164">
++    <CLASSES>
++      <root url="jar://$PROJECT_DIR$/src/libs/bcprov-jdk15on-164.jar!/" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES />
++  </library>
++</component>
+\ No newline at end of file
+Index: .idea/libraries/bcpkix_jdk15on_164.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/bcpkix_jdk15on_164.xml	(date 1590377420134)
++++ .idea/libraries/bcpkix_jdk15on_164.xml	(date 1590377420134)
+@@ -0,0 +1,9 @@
++<component name="libraryTable">
++  <library name="bcpkix-jdk15on-164">
++    <CLASSES>
++      <root url="jar://$PROJECT_DIR$/src/libs/bcpkix-jdk15on-164.jar!/" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES />
++  </library>
++</component>
+\ No newline at end of file
+Index: src/main/java/encryption/BouncyCastle.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package encryption;\r\n\r\nimport org.bouncycastle.jce.provider.BouncyCastleProvider;\r\n\r\nimport java.io.UnsupportedEncodingException;\r\nimport java.math.BigInteger;\r\nimport java.security.MessageDigest;\r\nimport java.security.NoSuchAlgorithmException;\r\nimport java.security.Security;\r\n\r\n/**\r\n * Created by momoko on 2019/12/19\r\n *\r\n * @author momoko\r\n */\r\npublic class BouncyCastle {\r\n    public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException {\r\n        Security.addProvider(new BouncyCastleProvider());\r\n        MessageDigest md = MessageDigest.getInstance(\"RipeMD160\");\r\n        md.update(\"hello\".getBytes(\"UTF-8\"));\r\n        byte[] results = md.digest();\r\n        System.out.println(new BigInteger(1,results).toString(16));\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/encryption/BouncyCastle.java	(revision ca54aca9003a74ad65675b3a8ec5f7eec904febb)
++++ src/main/java/encryption/BouncyCastle.java	(date 1586148100356)
+@@ -1,6 +1,5 @@
+ package encryption;
+ 
+-import org.bouncycastle.jce.provider.BouncyCastleProvider;
+ 
+ import java.io.UnsupportedEncodingException;
+ import java.math.BigInteger;
+@@ -14,12 +13,12 @@
+  * @author momoko
+  */
+ public class BouncyCastle {
+-    public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+-        Security.addProvider(new BouncyCastleProvider());
+-        MessageDigest md = MessageDigest.getInstance("RipeMD160");
+-        md.update("hello".getBytes("UTF-8"));
+-        byte[] results = md.digest();
+-        System.out.println(new BigInteger(1,results).toString(16));
+-    }
++//    public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException {
++//        Security.addProvider(new BouncyCastleProvider());
++//        MessageDigest md = MessageDigest.getInstance("RipeMD160");
++//        md.update("hello".getBytes("UTF-8"));
++//        byte[] results = md.digest();
++//        System.out.println(new BigInteger(1,results).toString(16));
++//    }
+ 
+ }
+Index: src/main/java/before/Box.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package before;\r\n\r\n/**\r\n * Created by sunyuqing on 2019/9/18.\r\n */\r\npublic class Box<T> {\r\n    private T t;\r\n\r\n    public T getT() {\r\n        return t;\r\n    }\r\n\r\n    public void setT(T t) {\r\n        this.t = t;\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        Box<Integer> integerBox = new Box<Integer>();\r\n        Box<String> stringBox = new Box<String>();\r\n        integerBox.setT(new Integer(10));\r\n        stringBox.setT(new String(\"等着我\"));\r\n\r\n        System.out.printf(\"整型值为 :%d\\n\\n\", integerBox.getT());\r\n        System.out.printf(\"字符串为 :%s\\n\", stringBox.getT());\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/before/Box.java	(revision ca54aca9003a74ad65675b3a8ec5f7eec904febb)
++++ src/main/java/before/Box.java	(date 1590376770154)
+@@ -17,7 +17,7 @@
+     public static void main(String[] args) {
+         Box<Integer> integerBox = new Box<Integer>();
+         Box<String> stringBox = new Box<String>();
+-        integerBox.setT(new Integer(10));
++        integerBox.setT(10);
+         stringBox.setT(new String("等着我"));
+ 
+         System.out.printf("整型值为 :%d\n\n", integerBox.getT());
+Index: src/main/java/java8lambda/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package java8lambda;\r\n\r\nimport com.sun.tools.javac.util.List;\r\n\r\nimport java.util.HashMap;\r\nimport java.util.Map;\r\n\r\n/**\r\n * Created by chengww on 2019/11/14\r\n *\r\n * @author chengww\r\n */\r\npublic class Main {\r\n    public static void main(String[] args) {\r\n        List<Student> list = List.of(\r\n                new Student(\"Bob\", 78),\r\n                new Student(\"Alice\", 85),\r\n                new Student(\"Brush\", 66),\r\n                new Student(\"Newton\", 99));\r\n        Students holder = new Students(list);\r\n        System.out.println(holder.getScore(\"Bob\") == 78 ? \"测试成功!\" : \"测试失败!\");\r\n        System.out.println(holder.getScore(\"Alice\") == 85 ? \"测试成功!\" : \"测试失败!\");\r\n        System.out.println(holder.getScore(\"Tom\") == -1 ? \"测试成功!\" : \"测试失败!\");\r\n    }\r\n}\r\n\r\nclass Students {\r\n    List<Student> list;\r\n    Map<String, Integer> cache;\r\n\r\n    Students(List<Student> list) {\r\n        this.list = list;\r\n        cache = new HashMap<>();\r\n    }\r\n\r\n    /**\r\n     * 根据name查找score，找到返回score，未找到返回-1\r\n     */\r\n    int getScore(String name) {\r\n        // 先在Map中查找:\r\n        Integer score = this.cache.get(name);\r\n        if (score == null) {\r\n            // TODO:\r\n            score = findInList(name);\r\n            if(score!=null)\r\n            cache.put(name,score);\r\n        }\r\n        return score == null ? -1 : score.intValue();\r\n    }\r\n\r\n    Integer findInList(String name) {\r\n        for (Student ss : this.list) {\r\n            if (ss.name.equals(name)) {\r\n                return ss.score;\r\n            }\r\n        }\r\n        return null;\r\n    }\r\n}\r\n\r\nclass Student {\r\n    String name;\r\n    int score;\r\n\r\n    Student(String name, int score) {\r\n        this.name = name;\r\n        this.score = score;\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/java8lambda/Main.java	(revision ca54aca9003a74ad65675b3a8ec5f7eec904febb)
++++ src/main/java/java8lambda/Main.java	(date 1590378987956)
+@@ -1,26 +1,26 @@
+ package java8lambda;
+ 
+-import com.sun.tools.javac.util.List;
+ 
+ import java.util.HashMap;
++import java.util.List;
+ import java.util.Map;
+ 
+ /**
+- * Created by chengww on 2019/11/14
++ * Created by momoko on 2019/11/14
+  *
+  * @author chengww
+  */
+ public class Main {
+     public static void main(String[] args) {
+-        List<Student> list = List.of(
+-                new Student("Bob", 78),
+-                new Student("Alice", 85),
+-                new Student("Brush", 66),
+-                new Student("Newton", 99));
+-        Students holder = new Students(list);
+-        System.out.println(holder.getScore("Bob") == 78 ? "测试成功!" : "测试失败!");
+-        System.out.println(holder.getScore("Alice") == 85 ? "测试成功!" : "测试失败!");
+-        System.out.println(holder.getScore("Tom") == -1 ? "测试成功!" : "测试失败!");
++//        List<Student> list = List.of(
++//                new Student("Bob", 78),
++//                new Student("Alice", 85),
++//                new Student("Brush", 66),
++//                new Student("Newton", 99));
++//        Students holder = new Students(list);
++//        System.out.println(holder.getScore("Bob") == 78 ? "测试成功!" : "测试失败!");
++//        System.out.println(holder.getScore("Alice") == 85 ? "测试成功!" : "测试失败!");
++//        System.out.println(holder.getScore("Tom") == -1 ? "测试成功!" : "测试失败!");
+     }
+ }
+ 
+Index: src/main/java/learnreg/LearnRegx.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package learnreg;\r\n\r\nimport com.sun.tools.javac.util.List;\r\n\r\n/**\r\n * Created by momoko on 2019/12/12\r\n *\r\n * @author momoko\r\n */\r\npublic class LearnRegx {\r\n    public static void main(String[] args) {\r\n        //正则表达式的匹配规则是从左到右按规则匹配\r\n        String re1 = \"abc\";\r\n        System.out.println(\"abc\".matches(re1));\r\n        System.out.println(\"Abc\".matches(re1));\r\n\r\n        String re2 = \"a&c\";\r\n        System.out.println(\"a&c\".matches(re2));\r\n        System.out.println(\"a\\\\&c\".matches(re2));\r\n        System.out.println(re2.matches(re2));\r\n        System.out.println(re2);\r\n\r\n        String re = \"\\\\d{3,4}-\\\\d{7,8}\";\r\n        for (String s : List.of(\"010-12345678\", \"020-9999999\", \"0755-7654321\")) {\r\n            if (!s.matches(re)) {\r\n                System.out.println(\"测试失败: \" + s);\r\n                return;\r\n            }\r\n        }\r\n        for (String s : List.of(\"010 12345678\", \"A20-9999999\", \"0755-7654.321\")) {\r\n            if (s.matches(re)) {\r\n                System.out.println(\"测试失败: \" + s);\r\n                return;\r\n            }\r\n        }\r\n        System.out.println(\"测试成功!\");\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/learnreg/LearnRegx.java	(revision ca54aca9003a74ad65675b3a8ec5f7eec904febb)
++++ src/main/java/learnreg/LearnRegx.java	(date 1590378987977)
+@@ -1,6 +1,7 @@
+ package learnreg;
+ 
+-import com.sun.tools.javac.util.List;
++
++import java.util.List;
+ 
+ /**
+  * Created by momoko on 2019/12/12
+@@ -21,19 +22,19 @@
+         System.out.println(re2);
+ 
+         String re = "\\d{3,4}-\\d{7,8}";
+-        for (String s : List.of("010-12345678", "020-9999999", "0755-7654321")) {
+-            if (!s.matches(re)) {
+-                System.out.println("测试失败: " + s);
+-                return;
+-            }
+-        }
+-        for (String s : List.of("010 12345678", "A20-9999999", "0755-7654.321")) {
+-            if (s.matches(re)) {
+-                System.out.println("测试失败: " + s);
+-                return;
+-            }
+-        }
+-        System.out.println("测试成功!");
++//        for (String s : List.of("010-12345678", "020-9999999", "0755-7654321")) {
++//            if (!s.matches(re)) {
++//                System.out.println("测试失败: " + s);
++//                return;
++//            }
++//        }
++//        for (String s : List.of("010 12345678", "A20-9999999", "0755-7654.321")) {
++//            if (s.matches(re)) {
++//                System.out.println("测试失败: " + s);
++//                return;
++//            }
++//        }
++//        System.out.println("测试成功!");
+     }
+ 
+ }
+Index: src/main/java/java8lambda/MyTestMain.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package java8lambda;\r\n\r\nimport com.sun.tools.javac.util.List;\r\n\r\nimport java.util.Objects;\r\n\r\n/**\r\n * Created by sunyuqing on 2019/11/7.\r\n */\r\npublic class MyTestMain {\r\n    public static void main(String[] args) {\r\n        List<Person> list = List.of(\r\n                new Person(\"Xiao\", \"Ming\", 18),\r\n                new Person(\"Xiao\", \"Hong\", 25),\r\n                new Person(\"Bob\", \"Smith\", 20)\r\n        );\r\n        boolean exist = list.contains(new Person(\"Bob\", \"Smith\", 20));\r\n        System.out.println(exist ? \"测试成功!\" : \"测试失败!\");\r\n    }\r\n}\r\n\r\nclass Person {\r\n    String firstName;\r\n    String lastName;\r\n    int age;\r\n    public Person(String firstName, String lastName, int age) {\r\n        this.firstName = firstName;\r\n        this.lastName = lastName;\r\n        this.age = age;\r\n    }\r\n\r\n    @Override\r\n    public boolean equals(Object obj) {\r\n        if(obj instanceof Person) {\r\n            Person p = (Person) obj;\r\n            return Objects.equals(this.firstName+this.lastName, p.firstName+p.lastName) && this.age == p.age;\r\n        }\r\n        return false;\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/java8lambda/MyTestMain.java	(revision ca54aca9003a74ad65675b3a8ec5f7eec904febb)
++++ src/main/java/java8lambda/MyTestMain.java	(date 1590378987966)
+@@ -1,7 +1,7 @@
+ package java8lambda;
+ 
+-import com.sun.tools.javac.util.List;
+ 
++import java.util.List;
+ import java.util.Objects;
+ 
+ /**
+@@ -9,13 +9,13 @@
+  */
+ public class MyTestMain {
+     public static void main(String[] args) {
+-        List<Person> list = List.of(
+-                new Person("Xiao", "Ming", 18),
+-                new Person("Xiao", "Hong", 25),
+-                new Person("Bob", "Smith", 20)
+-        );
+-        boolean exist = list.contains(new Person("Bob", "Smith", 20));
+-        System.out.println(exist ? "测试成功!" : "测试失败!");
++//        List<Person> list = List.of(
++//                new Person("Xiao", "Ming", 18),
++//                new Person("Xiao", "Hong", 25),
++//                new Person("Bob", "Smith", 20)
++//        );
++//        boolean exist = list.contains(new Person("Bob", "Smith", 20));
++//        System.out.println(exist ? "测试成功!" : "测试失败!");
+     }
+ }
+ 
+Index: src/main/java/before/JavaBeanTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/before/JavaBeanTest.java	(date 1592529691380)
++++ src/main/java/before/JavaBeanTest.java	(date 1592529691380)
+@@ -0,0 +1,42 @@
++package before;
++
++import java.beans.BeanInfo;
++import java.beans.IntrospectionException;
++import java.beans.Introspector;
++import java.beans.PropertyDescriptor;
++
++/**
++ * Created by momoko on 2020/6/19.
++ */
++public class JavaBeanTest {
++    public static void main(String[] args) throws IntrospectionException {
++        BeanInfo beanInfo = Introspector.getBeanInfo(Person.class);
++        for (PropertyDescriptor pd : beanInfo.getPropertyDescriptors()) {
++            System.out.println(pd.getName());
++            System.out.println(pd.getReadMethod());
++            System.out.println(pd.getWriteMethod());
++        }
++
++    }
++
++    class Person {
++        private String name;
++        private int age;
++
++        public String getName() {
++            return name;
++        }
++
++        public void setName(String name) {
++            this.name = name;
++        }
++
++        public int getAge() {
++            return age;
++        }
++
++        public void setAge(int age) {
++            this.age = age;
++        }
++    }
++}
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision ca54aca9003a74ad65675b3a8ec5f7eec904febb)
++++ .idea/misc.xml	(date 1590976065306)
+@@ -1,6 +1,9 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
++  <component name="JavaScriptSettings">
++    <option name="languageLevel" value="ES6" />
++  </component>
+   <component name="MavenProjectsManager">
+     <option name="originalFiles">
+       <list>
+@@ -8,7 +11,7 @@
+       </list>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" default="false" project-jdk-name="14" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: src/main/java/test/SplitTxtFile.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/test/SplitTxtFile.java	(date 1591669204328)
++++ src/main/java/test/SplitTxtFile.java	(date 1591669204328)
+@@ -0,0 +1,42 @@
++package test;
++
++import java.io.BufferedReader;
++import java.io.BufferedWriter;
++import java.io.FileInputStream;
++import java.io.FileNotFoundException;
++import java.io.FileOutputStream;
++import java.io.FileReader;
++import java.io.FileWriter;
++import java.io.IOException;
++import java.io.InputStream;
++import java.io.OutputStream;
++
++/**
++ * Created by momoko on 2020/4/6.
++ */
++public class SplitTxtFile {
++    private String[] names;
++
++    public void setNames(String... names) {
++        this.names = names;
++    }
++    public static void main(String[] args) {
++
++        int a = 72;
++        int b = 105;
++        int c = 65281;
++        // FIXME:
++        String s1 = "" + (char)a + (char)b + (char)c;
++        System.out.println(s1);
++
++        String fruit = "apple";
++        int opt = switch (fruit) {
++            case "apple" -> 1;
++            case "pear","mango" ->2;
++            default -> 0;
++        };
++        System.out.println(opt);
++
++    }
++
++}
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CompilerConfiguration\">\r\n    <annotationProcessing>\r\n      <profile name=\"Maven default annotation processors profile\" enabled=\"true\">\r\n        <sourceOutputDir name=\"target/generated-sources/annotations\" />\r\n        <sourceTestOutputDir name=\"target/generated-test-sources/test-annotations\" />\r\n        <outputRelativeToContentRoot value=\"true\" />\r\n        <module name=\"LearnJava\" />\r\n      </profile>\r\n    </annotationProcessing>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision ca54aca9003a74ad65675b3a8ec5f7eec904febb)
++++ .idea/compiler.xml	(date 1592529527138)
+@@ -9,5 +9,6 @@
+         <module name="LearnJava" />
+       </profile>
+     </annotationProcessing>
++    <bytecodeTargetLevel target="14" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: src/main/java/before/StringJoinerTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/before/StringJoinerTest.java	(date 1592457072611)
++++ src/main/java/before/StringJoinerTest.java	(date 1592457072611)
+@@ -0,0 +1,27 @@
++package before;
++
++import java.util.StringJoiner;
++
++/**
++ * Created by momoko on 2020/6/18.
++ */
++public class StringJoinerTest {
++    public static void main(String[] args) {
++            String[] fields = { "name", "position", "salary" };
++            String table = "employee";
++            String select = buildSelectSql(table, fields);
++            System.out.println(select);
++            System.out.println("SELECT name, position, salary FROM employee".equals(select) ? "测试成功" : "测试失败");
++
++    }
++    static String buildSelectSql(String table, String[] fields) {
++        // TODO:
++        StringJoiner sj = new StringJoiner(", ","SELECT "," FROM "+table);
++        for (String field : fields) {
++            sj.add(field);
++        }
++        return sj.toString();
++        //return  "SELECT %s FROM %s".formatted( String.join(", ",fields),table);
++    }
++
++}
+\ No newline at end of file
+Index: .idea/LearnJava.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/LearnJava.iml	(date 1590976065243)
++++ .idea/LearnJava.iml	(date 1590976065243)
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4" />
+\ No newline at end of file
+Index: src/main/java/before/EnumTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/before/EnumTest.java	(date 1592531016233)
++++ src/main/java/before/EnumTest.java	(date 1592531016233)
+@@ -0,0 +1,27 @@
++package before;
++
++/**
++ * Created by momoko on 2020/6/19.
++ */
++public class EnumTest {
++    public static void main(String[] args) {
++
++        WeekDay day = WeekDay.SUN;
++        if(day.dayValue == 0 || day.dayValue == 6) {
++            System.out.println("Work at home");
++        } else {
++            System.out.println("Work at office");
++        }
++
++    }
++
++    enum WeekDay {
++        MON(1),TUE(2),WED(3),THU(4),FRI(5),SAT(6),SUN(0);
++
++        public final int dayValue;
++
++        private WeekDay(int dayValue) {
++            this.dayValue = dayValue;
++        }
++    }
++}
+\ No newline at end of file
+Index: src/main/java/utils/FileUtils.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/utils/FileUtils.java	(date 1585023676287)
++++ src/main/java/utils/FileUtils.java	(date 1585023676287)
+@@ -0,0 +1,86 @@
++package utils;
++
++import java.io.File;
++import java.io.FileInputStream;
++import java.io.FileOutputStream;
++
++/**
++ * Created by momoko on 2020/3/24.
++ */
++public class FileUtils {
++    public static void main(String[] args) {
++        File file =  new File("E:/360Downloads/test.pdf");
++        try {
++            String[] names = divideFile(file.getAbsolutePath(),1000,".pdf");
++            for(int i = 0;i < names.length;i++) {
++                System.out.println(names[i]);
++            }
++            uniteFile(names,"E:/test.pdf");
++        } catch (Exception e) {
++            // TODO Auto-generated catch block
++            e.printStackTrace();
++        }
++    }
++
++    /**
++     * 分割文件
++     * @param fileName 待分割的文件名
++     * @param size 小文件的大小，以字节为单位
++     * @param suffix 生成的文件名后缀
++     * @return  分割后的小文件的文件名
++     * @throws Exception 分割过程中可能抛出的异常
++     */
++    public static String[] divideFile(String fileName, long size, String suffix) throws Exception {
++        File inFile = new File(fileName);
++        if (!inFile.exists() || inFile.isDirectory()) {
++            throw new Exception("not found file.");
++        }
++        File parentFile = inFile.getParentFile();
++        long fileLength = inFile.length();
++        if (size <= 0) {
++            size = fileLength / 2;
++        }
++        int num = (int) ((fileLength + size - 1) / size);
++        String[] outFileNames = new String[num];
++        FileInputStream in = new FileInputStream(inFile);
++        long inEndIndex = 0;
++        int inBeginIndex = 0;
++        for (int outFileIndex = 0; outFileIndex < num; outFileIndex++) {
++            File outFile = new File(parentFile, inFile.getName() + outFileIndex + suffix);
++            FileOutputStream out = new FileOutputStream(outFile);
++            inEndIndex += size;
++            inEndIndex = (inEndIndex > fileLength) ? fileLength : inEndIndex;
++            for (; inBeginIndex < inEndIndex; inBeginIndex++) {
++                out.write(in.read());
++            }
++            out.close();
++            outFileNames[outFileIndex] = outFile.getAbsolutePath();
++        }
++        in.close();
++        return outFileNames;
++    }
++
++    /**
++     * 合并文件
++     * @param fileNames 待合并的文件名，是一个数组
++     * @param targetFileName 目标文件名
++     * @return  目标文件的全路径
++     * @throws Exception 合并过程中可能抛出的异常
++     */
++    public static String uniteFile(String[] fileNames, String targetFileName) throws Exception {
++        File inFile = null;
++        File outFile = new File(targetFileName);
++        FileOutputStream out = new FileOutputStream(outFile);
++        for (int i = 0; i < fileNames.length; i++) {
++            inFile = new File(fileNames[i]);
++            FileInputStream in = new FileInputStream(inFile);
++            int c;
++            while ((c = in.read()) != -1) {
++                out.write(c);
++            }
++            in.close();
++        }
++        out.close();
++        return outFile.getAbsolutePath();
++    }
++}
+\ No newline at end of file

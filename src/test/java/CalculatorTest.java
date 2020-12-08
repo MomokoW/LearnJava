@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import test.Calculator;
+import com.momoko.test.Calculator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

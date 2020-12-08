@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import solutions.VersionCheck;
+import com.momoko.solutions.VersionCheck;
 
 /**
  * Created by momoko on 2019/12/26

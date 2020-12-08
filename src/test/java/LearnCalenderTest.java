@@ -1,8 +1,7 @@
-import date_and_time.LearnCalender;
+import com.momoko.date_and_time.LearnCalender;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**

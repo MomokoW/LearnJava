@@ -1,4 +1,4 @@
-import learnreg.Template;
+import com.momoko.learnreg.Template;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

@@ -1,7 +1,7 @@
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import utils.StringUtils;
+import com.momoko.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class StringUtilsTest {
 
     //使用测试文件进行参数化测试
     @ParameterizedTest
-    @CsvFileSource(resources = { "/test-capitalize.csv"})
+    @CsvFileSource(resources = { "/com.momoko.test-capitalize.csv"})
     void testCaptalize(String input, String result) {
         assertEquals(result, StringUtils.capitalize(input));
     }

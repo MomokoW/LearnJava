@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import test.Factorial;
+import com.momoko.test.Factorial;
 
 /**
  * Created by momoko on 2019/12/11

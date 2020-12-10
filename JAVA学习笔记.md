@@ -1,0 +1,338 @@
+# JAVA学习笔记
+
+
+
+## 基础知识
+
+<center><span style="color:red">冯·诺依曼体系结构</span></center>
+
+```mermaid
+graph LR;
+输入设备-->存储器-->输出设备
+存储器-->运算器
+运算器-->存储器
+控制器-.->存储器
+存储器-->控制器
+控制器-.->输出设备
+控制器-.->输入设备
+linkStyle 0 stroke:#ff3,stroke-width:2px;
+linkStyle 1 stroke:#ff3,stroke-width:2px;
+linkStyle 2 stroke:#ff3,stroke-width:2px;
+linkStyle 3 stroke:#ff3,stroke-width:2px;
+linkStyle 5 stroke:#f33,stroke-width:2px;
+
+```
+
+黄色箭头为数据流，红色箭头为指令流，虚线箭头为控制流
+
+- 速度的计量单位是<span style="color:blue; font-size:1em;">赫兹(HZ)，1Hz相当于每秒1个脉冲。</span>时钟速度越快，在给定的时间内发送的指令越多
+- 计算机就是一系列的电路开关，每个开关存在两种状态：关(off)和开(on)。如果电路是开的，那么它为1，否则为0
+- <span style='color:blue'>一个0或者1存储为一个比特，是计算机中最小的存储单位。</span>
+- <span style='color:blue'>计算机中最基本的存储单元是字节(byte)。</span>每个字节由8个bit构成
+- 内存由一个有序的字节序列组成。<span style='color:red'>一个程序和它的数据在被CPU执行前必须移到计算机的内存中。</span>
+
+
+
+### 命令行文件操作
+
+- echo 要写的内容>文件名.文件格式
+- md 目录名  创建目录
+- del  基本文件名.后缀  删除文件
+- rd 文件夹名  删除**空**的文件目录
+
+
+
+### Java两种核心机制
+
+- Java虚拟机（Java Virtual Machine）
+- 垃圾回收机制（Garbage Collection）
+
+<span style='color:red'>Java程序也会出现内存泄漏和内存溢出的问题！！！</span>
+
+
+
+### JDK，JRE，JVM的关系
+
+- JDK(Java Development Kit)：给Java开发人员使用，包含了Java的开发工具，也包括了JRE，因此，安装了JDK就不用再单独安装JRE了
+  - 其中的开发工具：编译工具(javac.exe)  打包工具(jar.exe)等等
+
+- JRE(Java Runtime Environment)：Java Runtime Environment（包括Java Plug-in）是[Sun](https://baike.baidu.com/item/Sun)的产品，包括两部分：Java Runtime Environment和Java Plug-in。JavaRuntimeEnvironment(JRE)是可以在其上运行、测试和传输应用程序的Java平台。**它包括Java虚拟机（jvm)、Java核心类库和支持文件。它不包含开发工具(JDK)--编译器、调试器和其它工具。JRE需要辅助软件--Java Plug-in--以便在浏览器中运行applet。**
+
+**<span style='color:blue'>简单而言，使用JDK的开发工具完成的Java程序，交给JRE去运行</span>**
+
+![Java8.0_platform](I:/JAVA%E9%A1%B9%E7%9B%AE%E8%A7%86%E9%A2%91/%E5%B0%9A%E7%A1%85%E8%B0%B7Java%E5%AD%A6%E7%A7%91%E5%85%A8%E5%A5%97%E6%95%99%E7%A8%8B%EF%BC%88%E6%80%BB207.77GB%EF%BC%89/1.%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%85%A8%E5%A5%97JAVA%E6%95%99%E7%A8%8B--%E5%9F%BA%E7%A1%80%E9%98%B6%E6%AE%B5%EF%BC%8873.36GB%EF%BC%89/%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%AE%8B%E7%BA%A2%E5%BA%B7Java%E6%A0%B8%E5%BF%83%E5%9F%BA%E7%A1%80_%E5%A5%BD%E8%AF%84%E5%A6%82%E6%BD%AE/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0%E6%BA%90%E7%A0%81%E8%B5%84%E6%96%99/1_%E8%AF%BE%E4%BB%B6/%E7%AC%AC1%E9%83%A8%E5%88%86%EF%BC%9AJava%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/%E5%B0%9A%E7%A1%85%E8%B0%B7_%E5%AE%8B%E7%BA%A2%E5%BA%B7_%E7%AC%AC1%E7%AB%A0_Java%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0/Java8.0_platform.jpg)
+
+为什么必须写JAVA_HOME：Tomcat服务等在配置时会在path下找到JAVA_HOME的位置并调用其中的库函数，如果没有就会出错。
+
+```java
+单行注释 //这是一行注释
+多行注释 
+    /*这是一行
+    这又是一行
+    */
+文档注释 注释内容可以被JDK提供的工具javadoc所解析，生成一套以网页文件形式体现的该程序的说明文档
+    /**
+    @Author Momoko
+    @Date 2020/10/12
+    */
+ javadoc -d 文件名 -可选项(author,date等) Java文件名.java
+```
+
+
+
+### JAVA 语法规范
+
+- 在一个Java源文件中可以声明多个类，<span style='color:orange'>最多有一个可以声明为public，声明为public的类为Java文件名。</span>
+- 程序的入口是main()方法。格式是固定的。
+- 编译：使用javac.exe命令编译java源文件。格式：javac 源文件名.java
+- 运行：使用java.exe命令运行字节码文件。格式：java 类名
+- <span style='color:purple'>运算符两边习惯性加上一个空格</span>
+- **<span style='color:blue'>关键字中所有字母都为小写</span>**
+
+- ![image-20201013152750720](../AppData/Roaming/Typora/typora-user-images/image-20201013152750720.png)
+
+- ![image-20201013152707351](../AppData/Roaming/Typora/typora-user-images/image-20201013152707351.png)
+
+- Java保留字：现有Java版本尚未使用，但以后版本可能会作为关键字使用 goto，const
+
+#### 标识符命名要求
+
+- <span style='color:blue'>不可以用数字开头</span>
+- 不可以包含空格
+- 由26个英文字母大小写，0-9，或 $ 组成
+- Java严格区分大小写，长度无限制。
+- <span style='color:green'>不可以使用关键字和保留字，但能包含关键字和保留字</span>
+
+#### Java定义的数据类型
+
+- 基本数据类型：byte(1)	short(2)	int(4)	long(8)	float(4)	double(8)	boolean(true or false)
+
+- 引用数据类型：类(calss)     接口(interface)    数组(array)
+- <span style='color:green'>声明long型变量，必须以'l'或'L'结尾</span>
+- <span style='color:green'>声明float型变量，必须以'f'或'F'结尾</span>
+- 定义char型变量，通常使用一对''，内部只能写一个字符，<span style='color:green'>转义字符</span>，或者Unicode转义字符
+- <span style='color:red'>当char、short、byte三种类型（包括同种之间）做运算时，自动类型提升结果为int</span>
+
+#### 进制相关
+
+- 二进制：0，1，满2进1.以0b或者0B开头
+- 十进制：0-9，满10进1
+- 八进制：0-7，满8进1.以数字<span style='color:red'>0</span>开头
+- 十六进制：0-9及A-F，满16进1.以<span style='color:red'>0x或0X开头</span>表示。A-F不区分大小写
+- 计算机以二进制<span style='color:red'>补码</span>的形式保存所有的整数
+
+#### Java运算符
+
+- 算术运算符
+- ![image-20201015155256320](../AppData/Roaming/Typora/typora-user-images/image-20201015155256320.png)
+- 赋值运算符：=、+=、-=、*=、/=、%=  <span style='color:red'>支持连续赋值 但是要先分别定义</span>
+- 比较运算符：==、!=、<、>、<=、>=、instanceof
+- 逻辑运算符：&、&&、|、||、！、^、只能用于布尔运算
+  - & 和 && 的运算结果相同，当符号左边是true时，二者都会执行符号右边的运算
+  - 当符号左边时false时，&继续执行符号右边的运算。&&不再执行符号右边的运算
+  - | 和 || 的运算结果相同，只要有一个为true则为true
+  - 当符号左边为true时，|继续执行符号右边的运算。||不在执行符号右边的运算
+- 位运算符：<<、>>、>>>、&、|、^、~(取反)
+  - <span style='color:red'>位运算是直接对整数的二进制进行的运算</span>
+  - 面试题：最高效的方式计算2*8？ 2<<3 或 8<<1
+  - \>\>(无符号右移，最高位无论是0或者1，空缺为7都用0补)
+- 三元运算符：<span style='color:purple'>（条件表达式）？表达式1：表达式2；</span>
+  - 条件表达式为true，结果为表达式1
+  - 条件表达式为false，结果为表达式2
+  - 表达式1和表达式2为<span style='color:red'>同种类型</span>
+  - <span style='color:green'>优先选择使用三元运算符来替代可以用if-else的地方</span>
+
+- <span style='color:orange'>取余运算结果的符号与被模数的符号相同</span>
+
+- <span style='color:red'>+=等赋值运算符、自增（自减）1不会改变本身变量的数据类型且效率高</span>
+- <span style='color:purple'> ==、!= 符号不仅可以使用在数值类型数据之间，还可以使用在其他引用类型变量之间</span>
+
+#### 从键盘获取输入
+
+从键盘获取不同类型的变量：使用Scanner类
+
+- 导入包
+- Scanner的实例化
+- 使用相应的方法读取对应的变量
+
+- <span style='color:orange'>Scanner只能获取一个字符串，不能获取单独的字符</span>
+
+#### 条件判断
+
+- 针对条件表达式：
+  - 如果多个条件表达式之间是“互斥”关系（或没有交集的关系），哪个判断和执行语句声明在上面还是下面，无所谓
+  - 如果多个条件表达式之间有交集关系，则需要仔细考虑顺序
+  - 如果多个条件表达式之间有包含关系，通常情况下，需要将范围小的声明在范围大的上面。否则，范围小的就没机会执行。
+
+- 根据switch表达式中的值依次匹配各个case中的<span style='color:red'>常量</span>，一旦匹配成功，则进入相应case中的执行语句，当调用完执行语句之后，则仍然向下执行直到遇到break关键字
+- switch结构中的表达式，只能是<span style='color:red'>如下6种数据类型之一</span>：
+  - byte、short、char、int、枚举类型（JDK5.0）、String类型（JDK7.0）
+- default是可选的，<span style='color:orange'>且位置是灵活的，但提到前面如果没有加上break，程序会运行到break才结束。</span>
+
+- switch-case中相同条件可以合并
+
+#### 循环结构
+
+- 循环语句的四个组成部分：
+  - 初始化部分
+  - 循环条件部分
+  - 循环体部分
+  - 迭代部分
+- 结束循环有几种方式？
+  - 方式一：循环条件部分返回false
+  - 方式二：在循环体中执行break，结束当前循环
+  - <span style='color:orange'>continue：结束当次循环</span>
+  - <span style='color:red'>相同点：break和continue关键字后面不能声明执行语句</span>
+-   带标签的break和continue，在循环前面加上标签，break label表示结束指定标识的一层循环结构 
+
+#### 数组
+
+- 数组，是多个相同类型数据按一定顺序排列的集合，并使用一个名字命名，并通过编号的方式
+- 创建二维数组需要注意的点：
+  - string[][] arr = new String\[3][]时，不可以调用arr[0]，此时并未初始化地址，这是动态初始化方式
+
+### 对象
+
+#### 局部变量 VS 成员变量
+
+- 相同点
+  - 定义变量的格式：数据类型 变量名 = 变量值
+  - 先声明，后使用
+  - 变量都有其对应的作用域
+- 不同点
+  - 在类中声明的位置不同
+  - 属性：直接定义在类的一对{}内
+  - 局部变量：声明在方法内、方法形参、代码块内、构造器形参、构造器内部的变量
+  - 属性可以在声明时指明其权限，使用权限修饰符（private、public、protected，缺省）
+  - 局部变量不可以使用权限修饰符
+  - <span style='color:red'>局部变量没有默认的初始化值，即在调用之前一定要赋值</span>
+
+- 在内存中的加载位置
+  - 属性加载到堆空间中（非static）
+  - 局部变量加载到栈空间中
+
+#### JVM内存解析
+
+- 编译完源程序后，生成一个或多个字节码文件
+- 我们使用JVM中的类的加载器和解释器对生成的字节码文件进行解释运行意味着需要将字节码文件中对应的类加载到内存中，涉及到内存解析。
+- <span style='color:purple'>匿名对象：在创建时没有显式地赋变量名，只能调用一次</span>
+
+#### 方法
+
+- 重载：同一个类中，存在一个以上的同名方法，只要它们的参数个数或者参数类型不同即可，<span style='color:red'>与返回值类型无关，只看参数列表</span>
+- 可变个数的形参：数据类型...变量名，传入的参数个数可以是：0、1、2。。。,<span style='color:blue'>必须声明在末尾</span>
+- 可变个数形参的方法与本类中方法名相同，<span style='color:orange'>形参不同</span>的方法构成重载，与方法名相同，<span style='color:red'>形参类型也相同的数组</span>之间不构成重载
+- Java里方法的参数传递方式只有一种：<span style='color:red'>值传递</span>，即将实际参数值的副本传入方法内
+  - 形参是基本数据类型：将实参基本数据类型变量的”数据值“传递给形参
+  - 形参是引用数据类型：将实参引用数据类型变量的<span style='color:red'>”地址值“</span>传递给形参
+
+#### 封装
+
+- 封装性的体现<span style='color:red'>(之一)</span>：将类的属性私有化，同时提供公共的方法来获取和设置属性的值；不对外暴露私有的方法；单例模式。。。
+
+- 封装性的体现需要权限修饰符来配合：private，缺省、protected、public
+
+- | 修饰符    | 类内部 | 同一个包 | 不同包的子类 | 同一个工程 |
+  | --------- | ------ | -------- | ------------ | ---------- |
+  | private   | Yes    | No       | No           | No         |
+  | 缺省      | Yes    | Yes      | No           | No         |
+  | protected | Yes    | Yes      | Yes          | No         |
+  | public    | Yes    | Yes      | Yse          | Yse        |
+
+- <span style='color:orange'>对于class的权限修饰只可以用public和default(缺省)</span>
+
+- 没有显式的定义构造器，则系统默认提供一个空参的构造器，权限默认与类的定义权限一致。<span style='color:red'>一旦定义了类的构造器，则系统不再提供默认的空参构造器</span>
+- 定义构造器的格式：权限修饰符 类名（形参列表）{}
+
+- JavaBean是一种可重用的组件
+  - <span style='color:red'>类是公共的</span>
+  - <span style='color:red'>有一个空参的公共的构造器</span>
+  - <span style='color:red'>有属性，且有对应的get，set方法</span>
+- this调用构造器
+  - 在类的构造器中，可以显式的使用“this(形参列表)"可以调用本类中其他的构造器
+  - <span style='color:red'>“this(形参列表)"必须声明在当前构造器首行，所以最多只能声明一个“this(形参列表)"</span>
+- package关键字
+  - 为了更好的实现项目中类的管理，出现包的概念
+  - 使用package声明类或接口所属的包，声明在源文件的首行
+- import关键字
+  - 在源文件中显式的使用import导入指定包下的类、接口
+  - 声明在包的声明和类的声明之间
+  - 使用的类或者接口是java.lang包下定义的，则可省略
+  - 如果在源文件中，使用了不同包下的同名的类，则必须至少有一个类需要以<span style='color:orange'>全类名</span>的方式显示
+  - import static:导入指定类或接口中的静态的属性或者方法
+
+#### 继承
+
+- 格式：class A extends B{}
+- 一旦子类A继承父类B以后，子类A中就获取了父类B中声明的所有属性、方法
+- <span style='color:red'>特别的，父类中声明为private的属性或方法，子类继承父类以后，仍然认为获取了父类中私有的结构，只是因为封装性的影响，子类不能直接调用父类的私有结构。</span>
+- Java只支持<span style='color:purple'>单继承和多层继承</span>
+- **方法的重写**：子类中根据需要对从父类中继承来的方法进行改造，执行程序时，子类的方法将覆盖父类的方法
+  - 子类重写的方法必须和父类被重写的方法具有相同的<span style='color:red'>方法名称、参数列表</span>
+  - 子类重写的方法的返回值类型<span style='color:red'>不能大于</span>父类被重写的方法的返回值类型
+    - 父类被重写的返回值类型是基本数据类型（double），则子类重写的方法的返回值类型必须是相同的基本数据类型（double）
+  - 子类重写的方法使用的访问权限<span style='color:red'>不能小于</span>父类被重写的方法的访问权限
+    - <span style='color:orange'>子类不能重写父类中声明为private权限的方法</span>
+  - 子类方法抛出的异常不能大于父类被重写方法的异常
+  - 可变个数形参认为是重写了父类中同名同参函数中带有数组的方法
+    - 父类 int add(int a, int[] arr)  子类 int add(int a, int... arr)这时子类重写了父类的方法
+- **super关键字**：可以用此关键字调用父类的属性，方法，构造器
+  - super(形参列表)必须声明在子类构造器的首行
+  - 在类的构造器中，针对于this(形参列表)和super(形参列表)只能二选一
+  - <span style='color:orange'>在构造器的首行，没有显式声明this(形参列表)或super(形参列表)</span>，<span style='color:red'>默认调用super()</span>
+
+#### 多态
+
+- 对象的多态性：父类的引用指向子类的对象（或子类的对象赋给父类的引用）
+- 多态的使用：虚拟方法调用（类的继承关系、方法的重写）
+  - 在编译器，只能调用父类中声明的方法，在运行期，实际执行的是子类重写父类的方法
+  - 编译时看左边，运行时看右边
+- <span style='color:red'>对象的多态性，只适用于方法，不适用于属性。</span>
+- 有了对象的多态性以后，内存中实际上是加载了子类特有的属性和方法的，但是由于变量声明为父类类型，导致编译时，只能调用父类中声明的属性和方法，子类特有的属性和方法不能调用。<span style='color:red'>使用强制类型转换来获取子类的对象</span>
+
+- **instanceof**关键字（a instanceof A)
+  - 在向下转型时，先判断对象a是否是类A的实例。如果是，返回true；如果不是，返回false
+
+#### java.lang.Object
+
+- Obejct类是所有java类的根父类
+- 如果在类的声明中未使用extends关键字指明其父类，则默认父类为java.lang.object类
+- object类中的属性和方法具有通用性 
+- 当我们输出一个对象的引用时，实际上就是调用当前对象的toString方法
+
+#### 包装类的使用
+
+- 针对八种基本数据类型定义相应的引用类型—包装类（封装类）
+
+- | 基本数据类型 |  包装类   |
+  | :----------: | :-------: |
+  |     byte     |   Byte    |
+  |    short     |   Short   |
+  |     int      |  Integer  |
+  |     long     |   Long    |
+  |    float     |   Float   |
+  |    double    |  Double   |
+  |   boolean    |  Boolean  |
+  |     char     | Character |
+
+  
+
+- <span style='color:red'>JDK5.0新特性：自动装箱与自动拆箱</span>
+
+#### static 关键字
+
+- static可以用来修饰属性、方法、代码块、内部类
+- static修饰属性时，表明该属性是该类的所有对象公有的，当通过某一个对象修改静态变量时，会导致其他对象调用此静态变量时，是修改过了的。
+- 静态变量、方法随着类的加载而加载
+- 静态方法中不能使用非静态的方法或属性
+- 在静态方法中，不能使用this，或super关键字
+- 单例模式：在整个软件系统中，<span style='color:red'>对某个类只能存在一个对象实例</span>，将类的构造器的访问权限设置为private，调用该类的某个静态方法以返回类内部创建的对象。
+
+#### final关键字
+
+- final 可以用来修饰的结构：类、方法、变量
+- final 用来修饰一个类：此类不能被其他类所继承。如：String类、System类、StringBuffer类
+- final 用来修饰方法：表明此方法不可以被重写
+
+- final 用来修饰变量：此时的变量称为是一个常量
+  - final 修饰属性：可以考虑赋值的位置有：显式初始化、代码块中初始化、构造器中初始化

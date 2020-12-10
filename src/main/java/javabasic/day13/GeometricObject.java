@@ -10,8 +10,8 @@ public class GeometricObject {
 
     public GeometricObject() {
         super();
-        this.color = "white";
-        this.weight = 1.0;
+//        this.color = "white";
+//        this.weight = 1.0;
     }
 
     public GeometricObject(String color, double weight) {

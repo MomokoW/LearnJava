@@ -4,7 +4,7 @@ package javabasic.day07;
  * Created by momoko on 2020/11/6.
  * 杨辉三角
  */
-public class YanHuiTria {
+public class YangHuiTria {
     public static void main(String[] args) {
         //1.声明并初始化二维数组
         int[][] yanghui = new int[10][];

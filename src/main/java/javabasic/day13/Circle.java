@@ -13,12 +13,13 @@ public class Circle extends GeometricObject{
     }
 
     public Circle(double radius) {
-        super();
+//        super();
         this.radius = radius;
     }
 
-    public Circle(double radius, String color, double weight) {
-        super(color, weight);
+    public
+    Circle(double radius, String color, double weight) {
+//        super(color, weight);
         this.radius = radius;
     }
 
@@ -26,12 +27,9 @@ public class Circle extends GeometricObject{
     public String toString() {
         return "Circle{" +
                 "radius=" + radius +
+                ", color='" + color + '\'' +
+                ", weight=" + weight +
                 '}';
-    }
-
-    public static void main(String[] args) {
-        Circle circle = new Circle();
-        System.out.println(circle);
     }
 
     public double getRadius() {

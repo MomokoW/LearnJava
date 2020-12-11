@@ -68,7 +68,12 @@ public class AppleService {
 //        });
 
         // 如果我们只是想遍历所有的 apple，并打印应该怎么做？
-        appleStore.forEach(apple -> System.out.println(apple));
+        appleStore.forEach(new Consumer<Apple>() {
+            @Override
+            public void accept(Apple apple) {
+                System.out.println(apple);
+            }
+        });
         // Replace with method reference
         appleStore.forEach(System.out::println);
 

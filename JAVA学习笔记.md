@@ -87,12 +87,13 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 - 编译：使用javac.exe命令编译java源文件。格式：javac 源文件名.java
 - 运行：使用java.exe命令运行字节码文件。格式：java 类名
 - <span style='color:purple'>运算符两边习惯性加上一个空格</span>
+- 一个Java源文件中最多只能有一个public类，当有一个public类时，源文件名必须与之一致，否则无法编译，如果源文件中没有一个public类，则文件名与类中没有一致性要求。
+
+- 至于main()不是必须要放在public类中才能运行程序。
+
 - **<span style='color:blue'>关键字中所有字母都为小写</span>**
-
 - ![image-20201013152750720](../AppData/Roaming/Typora/typora-user-images/image-20201013152750720.png)
-
 - ![image-20201013152707351](../AppData/Roaming/Typora/typora-user-images/image-20201013152707351.png)
-
 - Java保留字：现有Java版本尚未使用，但以后版本可能会作为关键字使用 goto，const
 
 #### 标识符命名要求
@@ -355,4 +356,68 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 
 - <span style='color:red'>接口中不能定义构造器，意味着接口不可以实例化</span>
 - <span style='color:purple'>接口与接口之间可以多继承</span>
+
+#### 内部类
+
+- Java中，允许一个类的定义位于另一个类的内部，前者称为<span style='color:blue'>内部类</span>，后者称为<span style='color:blue'>外部类</span>
+
+- Inner class 一般用在定义它的类或语句块之内，在外部引用它时必须给出完整的名称。
+
+  - <span style='color:blue'>Inner class的名字不能与包含它的外部类类名相同</span>
+
+- 分类
+
+  - 成员内部类（static成员内部类和非static成员内部类）
+    - 作为外部类的成员，可以调用外部类的结构，可以被四种不同的权限修饰
+    - 类内可以定义属性、方法、构造器
+  - 局部内部类（不谈修饰符）、匿名内部类（方法内、代码内、构造器内。。。）
+
+- 在局部内部类的方法中，如果调用局部内部类所在的声明的方法中的局部变量，则要求此局部变量声明为final的
+
+- ```Java
+  public class AA{
+  	public void method() {
+          //局部变量
+          int num = 10 //JDK8以后编译器不报错，但是默认为final的，不可修改
+          class AA {
+              public void show() {
+                  System.out.println(num);
+              }
+          }
+      }
+  }
+  ```
+
+### 异常
+
+- Java程序在执行过程中所发生的异常事件可分为两类
+
+- **<span style='color:blue'>Error:</span>** Java虚拟机无法解决的严重问题。如：JVM系统内部错误，资源耗尽等严重情况。如StackoverflowError和OOM。
+
+- **<span style='color:blue'>Exception:</span>**其它因编程错误或偶然的外在因素导致的一般性问题，可以使用针对性的代码进行处理。例如：
+
+  - 空指针访问
+  - 试图读取不存在的文件
+  - 网络连接中断
+  - 数组角标越界等等
+
+- ```java
+  try {
+      //可能出现的异常
+  } catch() {
+      //处理异常的方式
+  } finally {
+      //一定会执行的代码
+  }
+  ```
+
+- finally是可选的
+
+- finally中声明的是一定会被执行的代码。即使catch中又出现异常了，try中有return语句，catch中有return语句等等。
+
+- 数据库连接、输入输出流、网络编程Socket等资源，JVM不能自动回收，需要手动释放，这些资源的释放则可以放到finally中
+
+- 
+
+
 

@@ -60,7 +60,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 
 **<span style='color:blue'>简单而言，使用JDK的开发工具完成的Java程序，交给JRE去运行</span>**
 
-![Java8.0_platform](I:/JAVA%E9%A1%B9%E7%9B%AE%E8%A7%86%E9%A2%91/%E5%B0%9A%E7%A1%85%E8%B0%B7Java%E5%AD%A6%E7%A7%91%E5%85%A8%E5%A5%97%E6%95%99%E7%A8%8B%EF%BC%88%E6%80%BB207.77GB%EF%BC%89/1.%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%85%A8%E5%A5%97JAVA%E6%95%99%E7%A8%8B--%E5%9F%BA%E7%A1%80%E9%98%B6%E6%AE%B5%EF%BC%8873.36GB%EF%BC%89/%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%AE%8B%E7%BA%A2%E5%BA%B7Java%E6%A0%B8%E5%BF%83%E5%9F%BA%E7%A1%80_%E5%A5%BD%E8%AF%84%E5%A6%82%E6%BD%AE/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0%E6%BA%90%E7%A0%81%E8%B5%84%E6%96%99/1_%E8%AF%BE%E4%BB%B6/%E7%AC%AC1%E9%83%A8%E5%88%86%EF%BC%9AJava%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/%E5%B0%9A%E7%A1%85%E8%B0%B7_%E5%AE%8B%E7%BA%A2%E5%BA%B7_%E7%AC%AC1%E7%AB%A0_Java%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0/Java8.0_platform.jpg)
+![Java8.0_platform](\resources\Java8.0_platform.jpg)
 
 为什么必须写JAVA_HOME：Tomcat服务等在配置时会在path下找到JAVA_HOME的位置并调用其中的库函数，如果没有就会出错。
 
@@ -92,8 +92,8 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 - 至于main()不是必须要放在public类中才能运行程序。
 
 - **<span style='color:blue'>关键字中所有字母都为小写</span>**
-- ![image-20201013152750720](../AppData/Roaming/Typora/typora-user-images/image-20201013152750720.png)
-- ![image-20201013152707351](../AppData/Roaming/Typora/typora-user-images/image-20201013152707351.png)
+- ![image-20201013152750720](\resources\image-20201013152750720.png)
+- ![image-20201013152707351](\resources\image-20201013152707351.png)
 - Java保留字：现有Java版本尚未使用，但以后版本可能会作为关键字使用 goto，const
 
 #### 标识符命名要求
@@ -125,7 +125,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 #### Java运算符
 
 - 算术运算符
-- ![image-20201015155256320](../AppData/Roaming/Typora/typora-user-images/image-20201015155256320.png)
+- ![image-20201015155256320](C:\Users\11658\IdeaProjects\LearnJava\resources\image-20201015155256320.png)
 - 赋值运算符：=、+=、-=、*=、/=、%=  <span style='color:red'>支持连续赋值 但是要先分别定义</span>
 - 比较运算符：==、!=、<、>、<=、>=、instanceof
 - 逻辑运算符：&、&&、|、||、！、^、只能用于布尔运算
@@ -417,7 +417,19 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 
 - 数据库连接、输入输出流、网络编程Socket等资源，JVM不能自动回收，需要手动释放，这些资源的释放则可以放到finally中
 
-- 
+
+### 异常
+
+- 如何选择使用try-catch-finally还是throws
+  - 如果父类中被重写的方法没有throws方式处理异常，则子类重写的方法也不能使用throws，意味着如果子类重写的方法中有异常，必须使用try-catch-finally方式处理
+  - 执行的方法中，先后又调用了另外的几个方法，这几个方法是递进关系执行的，建议使用throws方式进行处理，在最外层的方法里面try-catch
+- 如何自定义异常？
+  1. 继承于现有的异常结构：RuntimeException、Exception（常用这两个）
+  2. 提供全局常量：serialVersionUID
+  3. 提供重载的构造器
+
+- throw和throws的区别
+  - throw是声明异常的方式，生成一个异常对象，是”抛“异常的方式，throws是异常处理的方式，是”抓“异常的方式
 
 
 

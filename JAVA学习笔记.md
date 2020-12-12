@@ -89,9 +89,9 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 - <span style='color:purple'>运算符两边习惯性加上一个空格</span>
 - **<span style='color:blue'>关键字中所有字母都为小写</span>**
 
-- ![image-20201013152750720](../AppData/Roaming/Typora/typora-user-images/image-20201013152750720.png)
+- ![image-20201013152750720](resources/image-20201013152750720.png)
 
-- ![image-20201013152707351](../AppData/Roaming/Typora/typora-user-images/image-20201013152707351.png)
+- ![image-20201013152707351](resources/image-20201013152707351.png)
 
 - Java保留字：现有Java版本尚未使用，但以后版本可能会作为关键字使用 goto，const
 
@@ -124,7 +124,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 #### Java运算符
 
 - 算术运算符
-- ![image-20201015155256320](../AppData/Roaming/Typora/typora-user-images/image-20201015155256320.png)
+- ![image-20201015155256320](resources/image-20201015155256320.png)
 - 赋值运算符：=、+=、-=、*=、/=、%=  <span style='color:red'>支持连续赋值 但是要先分别定义</span>
 - 比较运算符：==、!=、<、>、<=、>=、instanceof
 - 逻辑运算符：&、&&、|、||、！、^、只能用于布尔运算
@@ -264,7 +264,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 #### 继承
 
 - 格式：class A extends B{}
-- 一旦子类A继承父类B以后，子类A中就获取了父类B中声明的所有属性、方法
+- 一旦子类A继承父类B以后，子类A中就获取了父类B中声明的<span style='color:red'>所有属性、方法</span>
 - <span style='color:red'>特别的，父类中声明为private的属性或方法，子类继承父类以后，仍然认为获取了父类中私有的结构，只是因为封装性的影响，子类不能直接调用父类的私有结构。</span>
 - Java只支持<span style='color:purple'>单继承和多层继承</span>
 - **方法的重写**：子类中根据需要对从父类中继承来的方法进行改造，执行程序时，子类的方法将覆盖父类的方法
@@ -276,6 +276,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
   - 子类方法抛出的异常不能大于父类被重写方法的异常
   - 可变个数形参认为是重写了父类中同名同参函数中带有数组的方法
     - 父类 int add(int a, int[] arr)  子类 int add(int a, int... arr)这时子类重写了父类的方法
+  - 子类与父类中同名同参数的方法要么都声明为非static的（考虑重写），要么都声明为static的（不是重写）
 - **super关键字**：可以用此关键字调用父类的属性，方法，构造器
   - super(形参列表)必须声明在子类构造器的首行
   - 在类的构造器中，针对于this(形参列表)和super(形参列表)只能二选一
@@ -336,3 +337,25 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 
 - final 用来修饰变量：此时的变量称为是一个常量
   - final 修饰属性：可以考虑赋值的位置有：显式初始化、代码块中初始化、构造器中初始化
+- finalize() 方法是在垃圾收集器删除对象之前对这个对象调用的
+
+#### abstract关键字
+
+- abstract 可以用来修饰类、方法
+- abstract 修饰类，此类不能实例化，但是子类可调用抽象类中的构造器
+- abstract 修饰方法，抽象方法只有方法的声明，没有方法体
+- <span style='color:blue'>只要类中有抽象方法，则该类自动变为抽象类</span>，即必须将该类也声明为抽象类，否则编译不通过
+- abstract 不能用来修饰私有方法、静态方法、final的方法
+
+### 异常
+
+- 如何选择使用try-catch-finally还是throws
+  - 如果父类中被重写的方法没有throws方式处理异常，则子类重写的方法也不能使用throws，意味着如果子类重写的方法中有异常，必须使用try-catch-finally方式处理
+  - 执行的方法中，先后又调用了另外的几个方法，这几个方法是递进关系执行的，建议使用throws方式进行处理，在最外层的方法里面try-catch
+- 如何自定义异常？
+  1. 继承于现有的异常结构：RuntimeException、Exception（常用这两个）
+  2. 提供全局常量：serialVersionUID
+  3. 提供重载的构造器
+
+- throw和throws的区别
+  - throw是声明异常的方式，生成一个异常对象，是”抛“异常的方式，throws是异常处理的方式，是”抓“异常的方式

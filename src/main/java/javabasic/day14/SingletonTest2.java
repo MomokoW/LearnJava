@@ -24,9 +24,20 @@ class Order {
 
     //3.声明public、static的返回当前类的方法
     //加上synchronized关键字就是线程安全的，但是效率比较低
-    public static synchronized Order getInstance() {
-        if(instance == null) {
-            instance = new Order();
+//    public static synchronized Order getInstance() {
+//        if(instance == null) {
+//            instance = new Order();
+//        }
+//        return instance;
+//    }
+
+    public static Order getInstance() {
+        if (instance == null) {
+            synchronized (Order.class) {
+                if (instance == null) {
+                    instance = new Order();
+                }
+            }
         }
         return instance;
     }

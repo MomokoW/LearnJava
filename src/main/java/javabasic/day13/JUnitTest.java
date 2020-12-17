@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  * 创建JAVA类进行单元测试
- * 刺激JAVA类要求：
+ * 此JAVA类要求：
  * 1.此类是public的
  * 2.此类提供公共的无参的构造器
  * 单元测试方法权限是public且没有返回值类型，没有形参

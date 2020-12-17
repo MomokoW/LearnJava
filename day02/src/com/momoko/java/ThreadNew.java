@@ -1,6 +1,9 @@
 package com.momoko.java;
 
+import java.util.Enumeration;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 /**
  * Created by momoko on 2020/12/15.
@@ -9,6 +12,18 @@ import java.util.concurrent.Callable;
 public class ThreadNew {
     public static void main(String[] args) {
         NumThread numThread = new NumThread();
+        FutureTask futureTask = new FutureTask(numThread);
+        new Thread(futureTask).start();
+        try {
+            //get()返回值即为FutureTask构造器参数Callable实现类重写的call()的返回值
+            Object sum = futureTask.get();
+            System.out.println(sum);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
 
     }
 }

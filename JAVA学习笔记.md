@@ -356,7 +356,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
     - 如果子类（或实现类）继承的父类和实现的接口中声明了同名同参数的方法，子类在没有重写此方法的情况下，默认调用的是父类中同名同参数方法。 
 
 - <span style='color:red'>接口中不能定义构造器，意味着接口不可以实例化</span>
-- <span style='color:purple'>接口与接口之间可以多继承</span>
+- <span style='color:purple'>接口与接口之间可以多继承，使用extends关键字</span>
 
 #### 内部类
 
@@ -427,6 +427,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
   3. 提供重载的构造器
 
 - throw和throws的区别
+  
   - throw是声明异常的方式，生成一个异常对象，是”抛“异常的方式，throws是异常处理的方式，是”抓“异常的方式
 
 ### 线程
@@ -520,14 +521,35 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
   ```
 
 
-- **方式三**：实现Callable接口
+- **方式三**：实现Callable接口  ——JDK5.0新增
   - 相比run()方法，可以有返回值
   - 方法可以抛出异常
   - 支持泛型的返回值
   - 需要借助FutureTask类，比如获取返回结果
 - Future接口
   - 可以对具体Runnable、Callable任务的执行结果进行取消、查询是否完成、获取结果等。
-  - FutureTask是Future接口的唯一实现类
+  - <span style='color:blue'>FutureTask是Future的具体实现</span>
+  - FutureTask同时实现了Runnable，Future接口，它既可以作为Runnable被线程实行，又可以作为Future得到Callable的返回值。
+- 步骤：
+
+  1. 创建一个实现Callable的实现类
+  2. 实现call方法，将此线程需要执行的操作声明在call()中
+  3. 创建Callable接口实现类的对象
+  4. 将此对象作为参数传递到FutureTask的构造器中，创建FutureTask的对象
+  5. 将FutureTask的对象作为参数传递到Thread类的构造器中，创建Thread对象，并调用start()
+  6. 获取Callable方法中返回值
+- **方式四**：使用线程池
+- 提前创建好多个线程，放入线程池中，使用时直接获取，使用完放回池中，可以避免频繁创建销毁，实现重复利用。
+- ExecutorService：真正的线程池接口。常见子类ThreadPoolExecutor
+
+  - void execute(Runnable command)：执行任务/命令，没有返回值，一般用来执行Runnable
+  - <T>Future<T> submit(Callable<T> task)：执行任务，有返回值，一般用来执行Callable
+  - void shutdown()：关闭连接池
+- Executors：工具类、线程池的工厂类，用于创建并返回不同类型的线程池
+
+  - Executors.newCachedThreadPool()：创建一个可根据需要创建新线程的线程池
+  - Executors.newFixedThreadPool(n)：创建一个可重用固定线程数的线程池
+  - Executors.newSingleThreadExecutor()：创建一个只有一个线程的线程池
 
 #### 线程同步
 
@@ -564,3 +586,40 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 - notify()：一旦执行此方法，就会唤醒被wait的一个线程。如果有多个线程，则唤醒优先级高的线程。
 - notifyAll()：一旦执行此方法，就会唤醒被wait的所有线程
 - <span style='color:red'>上述三个方法必须使用在同步代码块或者同步方法中，且三个方法的调用者必须是同步代码块或同步方法中的同步监视器</span>
+- 创建JAVA类进行单元测试，此JAVA类要求：
+  * 此类是public的
+  * 此类提供公共的无参的构造器
+    * 单元测试方法权限是public且没有返回值类型，没有形参
+  * 此单元测试方法上需要声明注解，@Test
+
+### 常用类
+
+#### String类
+
+- String：代表不可变的字符序列，简称：不可变性
+  - 通过字面量（String s = "abc"）的方式给一个字符串赋值，此时的字符串值声明在<span style='color:purple'>字符串常量池</span>中
+  - 当对字符串重新赋值时，需要重写指定内存区域赋值，不能使用原有的value赋值
+  - 当对现有的字符串进行连接操作时，也需要重新指定内存区域赋值，不能使用原有的value赋值
+  - <span style='color:purple'> 字符串常量池中是不会储存相同内容的字符串的</span>
+- String 的实例化方式：
+  - 通过字面量定义的方式
+  - 通过new + 构造器的方式
+- 常量于常量的拼接在常量池中。且常量池中不会存储相同内容的常量
+- <span style='color:orange'>如果拼接的结果调用intern()方法，返回值就在常量池中。</span>
+
+#### String、StringBuffer、StringBuilder三者的异同
+
+- String：不可变的字符序列；底层使用char[]存储
+- StringBuffer：可变的字符序列；<span style='color:red'>线程安全的（方法都加上了synchronized关键字）</span>，效率低；底层使用char[]存储
+- StringBuilder：可变的字符序列；线程不安全的，效率高；底层使用char[]存储  ——JDK5.0新增的
+
+#### Date类
+
+- java.utils.Date类
+  - |---java.sql.Date类
+- 两个构造器的使用
+  - 构造器一：Date()：创建一个对应当前时间的Date对象
+  - 构造器二：创建指定毫秒数的Date对象
+- 两个方法的使用
+  - toString()：显示当前的年、月、日、时、分、秒
+  - getTime()：获取当前Date对象对应的毫秒数。（时间戳）

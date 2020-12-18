@@ -569,23 +569,65 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 
 - 同步的方式，解决了线程的安全问题。操作同步代码时，只能有一个线程参与，其他线程等待。
 
-- 方式二：同步方法
+- 方式二：同步方法（给方法加上synchronized关键字）
 
   - 如果操作共享数据的代码完整的声明在一个方法中，不妨将此方法声明为同步的
-  - 同步方法人仍然涉及到同步监视器，只是不需要显式的声明
-  - 非静态的同步方法，同步监视器是：this
-  - 静态的同步方法，同步监视器是：当前类本身
+  - 同步方法仍然涉及到同步监视器，只是不需要显式的声明
+  - <span style='color:red'>非静态的同步方法，同步监视器是：this</span>
+  - <span style='color:red'>静态的同步方法，同步监视器是：当前类本身</span>
 
 #### 死锁
 
 - 不同的线程分别占用对方需要的同步资源不放弃，都在等待对方放弃自己需要的同步资源，形成线程的死锁
+
 - 尽量减少同步资源的定义，尽量避免嵌套同步
+
 - 从JDK5.0开始，JAVA提供通过显式定义同步锁对象来实现同步。同步锁使用Lock对象充当。
+
 - ReentrantLock可以替代synchronized进行同步；ReentrantLock获取锁更安全；必须先获取到锁，再进入try {...}代码块，最后使用finally保证释放锁； 可以使用tryLock()尝试获取锁。
+
+- ```Java
+  class Window5 implements Runnable {
+      //需要加static才能同步，还有问题
+      private int ticket = 100;
+  
+      //1.实例化ReentrantLock
+      private ReentrantLock lock = new ReentrantLock();
+  
+      @Override
+      public void run() {
+          while (true) {
+              try {
+                  //2.调用lock()
+                  lock.lock();
+                  if (ticket > 0) {
+                      try {
+                          sleep(100);
+                      } catch (InterruptedException e) {
+                          e.printStackTrace();
+                      }
+                      System.out.println(currentThread().getName() + ":卖票，票号为:" + ticket);
+                      ticket--;
+                  } else {
+                      break;
+                  }
+              } finally {
+                  //3.调用解锁的方法
+                  lock.unlock();
+              }
+          }
+      }
+  }
+  ```
+
 - wait()：调用wait()的线程会进入阻塞状态且会释放锁
+
 - notify()：一旦执行此方法，就会唤醒被wait的一个线程。如果有多个线程，则唤醒优先级高的线程。
+
 - notifyAll()：一旦执行此方法，就会唤醒被wait的所有线程
+
 - <span style='color:red'>上述三个方法必须使用在同步代码块或者同步方法中，且三个方法的调用者必须是同步代码块或同步方法中的同步监视器</span>
+
 - 创建JAVA类进行单元测试，此JAVA类要求：
   * 此类是public的
   * 此类提供公共的无参的构造器
@@ -623,3 +665,62 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 - 两个方法的使用
   - toString()：显示当前的年、月、日、时、分、秒
   - getTime()：获取当前Date对象对应的毫秒数。（时间戳）
+
+#### java.text.SimpleDateFormat类
+
+- 格式化：日期—>文本、解析：文本—>日期
+- 格式化：
+  - SimpleDateFormat()：默认的模式和语言环境创建对象
+  - public SimpleDateFormat(String pattern)：用指定格式创建一个对象
+  - <span style='color:green'>public String format(Date date) </span>：方法格式化时间对象date
+- 解析：
+  - public Date parse(String source)：从给定字符串的开始解析文本，以生成一个日期
+
+#### java.util.Calendar类
+
+- 获取Calendar(抽象类)实例的方法
+  - 使用<span style='color:red'>Calendar.getInstance()</span>方法：其实返回的也是GregorianCalendar子类对象
+  - 调用它的子类<span style='color:red'>GregorianCalendar</span>的构造器
+
+- 一个Calendar的实例时系统时间的抽象表示，通过<span style='color:red'>get(int field)</span>方法来取得想要的时间信息。比如YEAR、MONTH、DAY_OFWEEK、HOUR_OF_DAY、MINUTE、SECOND等
+  - <span style='color:red'>public void set(int field,int value)</span>
+  - <span style='color:red'>public void add(int field,int amount)</span>
+  - <span style='color:red'>public final Date getTime()</span>
+  - <span style='color:red'>public void setTime(Date date)</span>
+- 注意：
+  - 获取月份时：一月是0，二月是1，以此类推，12月是11
+  - 获取星期时：周日是1，周二是2，。。。周六是7
+
+#### LocalDate、LocalTime、LocalDateTime  ——JDK8.0新增
+
+- 它们的实例是<span style='color:red'>不可变对象</span>，分别表示使用ISO-8601日历系统的日期、时间、日期与时间。提供了简单的本地日期或时间，并不包含当前的时间信息，也不包含与时区相关的信息。
+
+- ```java
+  对于某一个时间戳，给它关联上指定的ZoneId，就得到了ZonedDateTime，
+  继而可以获得了对应时区的LocalDateTime
+    LocalDateTime，ZoneId，Instant，ZonedDateTime和long都可以互相转换：
+    ┌─────────────┐
+    │LocalDateTime│────┐
+    └─────────────┘    │    ┌─────────────┐
+                       ├───>│ZonedDateTime│
+    ┌─────────────┐    │    └─────────────┘
+    │   ZoneId    │────┘           ▲
+    └─────────────┘      ┌─────────┴─────────┐
+                         │                   │
+                         ▼                   ▼
+                  ┌─────────────┐     ┌─────────────┐
+                  │   Instant   │<───>│    long     │
+                  └─────────────┘     └─────────────┘
+  
+   
+  ```
+
+- 对日期和时间进行调整则使用withXxx()方法
+
+  - 调整年：withYear()
+  - 调整月：withMonth()
+  - 调整日：withDayOfMonth()
+  - 调整时：withHour()
+  - 调整分：withMinute()
+  - 调整秒：withSecond()
+

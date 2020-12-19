@@ -724,3 +724,16 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
   - 调整分：withMinute()
   - 调整秒：withSecond()
 
+#### Comparable接口
+
+- 重写CompareTo(obj)的规则
+  - 如果当前对象this大于形参对象obj，则返回正整数
+  - 如果当前对象this小于形参对象obj，则返回负整数
+  - 如果当前对象this等于形参对象obj，则返回零
+
+- 对于自定义类，如果需要排序，可让自定义类事项Comparable接口，重现CompareTo(obj)方法
+
+#### Comparator接口：定制排序
+
+- 当元素的类型没有实现Comparable接口而又不方便修改代码或者实现了java.lang.Comparable接口的排序规则不适合当前的操作，那么看可以考虑使用Comparator的对象来排序
+- 重写compare(T o1, T o2)方法，比较o1和o2的大小  

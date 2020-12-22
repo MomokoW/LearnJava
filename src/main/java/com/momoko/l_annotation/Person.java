@@ -36,7 +36,7 @@ public class Person {
     }
 
     public static void main(String[] args) throws IllegalAccessException {
-        Person p = new Person("Bob Karson", "1111");
+        Person p = new Person("Bob", "111");
         p.check(p);
 
     }

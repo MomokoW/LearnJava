@@ -737,3 +737,74 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 
 - 当元素的类型没有实现Comparable接口而又不方便修改代码或者实现了java.lang.Comparable接口的排序规则不适合当前的操作，那么看可以考虑使用Comparator的对象来排序
 - 重写compare(T o1, T o2)方法，比较o1和o2的大小  
+
+### 枚举类
+
+- 枚举类的理解：类的对象只有<span style='color:purple'>有限个，确定的</span>。称此类为枚举类
+
+- <span style='color:blue'>当需要定义一组常量时，建议使用枚举类</span>
+- 定义枚举类：
+  - jdk5.0之前，自定义枚举类
+    - 声明枚举类对象的属性:private final修饰
+    - 私有化类的构造器，并给对象赋属性值
+    - 提供当前枚举类的对各对象：public static final的
+    - 其他诉求：获取枚举类对象的属性
+  - jdk5.0，可以使用enum关键字定义枚举类，定义的枚举类默认继承于java.lang.Enum
+    - 使用enum关键字代替class关键字
+    - 提供当前枚举类的对各对象：多个对象之间用逗号隔开，末尾对象分号结束，此时需要省略public static final
+      - 例如：SPRING("春天","春暖花开")
+    - 声明枚举类对象的属性:private final修饰
+    - 私有化类的构造器，并给对象赋属性值
+    - 其他诉求：获取枚举类对象的属性
+
+- Enum类的主要方法
+  - <span style='color:red'>values()方法</span>：返回枚举类型的对象数组。该方法可以很方便地遍历所有的枚举值
+  - <span style='color:red'>valueOf(String str)</span>：可以把一个字符串转为对应的枚举类对象。<span style='color:red'>要求字符串必须是枚举类对象的“名字”</span>。如不是，会有运行时异常。
+  - <span style='color:red'>toString()</span>：返回当前枚举类对象常量的名称
+- 使用enum关键字定义的枚举类实现接口的情况
+  - 实现接口，在enum类中实现抽象方法（常规套路）
+  - 让枚举类的对象分别实现接口中的抽象方法
+
+### 注解
+
+- JDK5.0增加的对元数据（MetaData）的支持
+- Annotation其实即使代码里的<span style='color:blue'>特殊标记</span>，这些标记可以在编译，类加载，运行时被读取，并执行相应的处理。
+- Annotation可以像修饰符一样被使用，可用于<span style='color:red'>修饰包，类，构造器，方法，成员变量，参数，局部变量的声明</span>，这些信息被保存在Annotation的"name=value"对中
+- 在编译时进行格式检查（JDK内置的三个基本注解）
+  - @Override：限定重写父类方法，该注解只能用于方法
+  - @Deprecated：用于表示所修饰的元素（类，方法等）已过时
+  - @SuppressWarnings：抑制编译器警告
+- 如何自定义注解，自定义注解自动继承了<span style='color:blue'>java.lang.Annotation接口</span>
+  - 使用@interface关键字
+  - 成员变量使用无参数方法的形式来声明，其方法名和返回值定义了该成员的名字和类型。类型只能是<span style='color:blue'>八种基本数据类型、String类型、Class类型、enum类型、Annotation类型、以上所有类型的数组</span>
+  - 可以在定义Annotation的成员变量时为其指定初始值，指定成员变量的初始值可使用<span style='color:blue'>default关键字</span>
+  - 如果只有一个参数成员，建议使用<span style='color:blue'>参数名为value</span>
+  - 如果定义的注解含有配置参数，那么使用时必须指定参数值，除非它有默认值。格式是”参数名 = 参数值“，如果只有一个参数成员，且名称为value，可以省略”value=“
+- jdk提供的四种元注解（修饰注解的注解）
+  - Retention：用于指定该Annotation的生命周期（SOURCE\CLASS\RUNTIME）
+  - Target：用于指定被修饰的Annotation能用于修饰哪些程序元素。包含名为value的成员变量
+  - Documented：用于指定被Annotation修饰的Annotation类将被javadoc解析时，保留下来
+  - Inherited：被它修饰的Annotation将具有<span style='color:red'>继承性</span>。如果某个类使用了被@Inherited修饰的Annotation，则其子类将自动具有该注解。
+- jdk 8中注解的新特性：可重复注解、类型注解
+  - 可重复注解：@Repeatable()
+    - 在MyAnnotation上声明@Repeatable，成员值为MyAnnotations.class
+    - MyAnnotation的Targe、Rentention等元注解和MyAnnotations相同
+  - 类型注解：
+    - ElementType.TYPE_PARAMETER 表示该注解能写在类型变量的声明语句中（如：泛型声明）
+    - ElementType.TYPE_USE 表示该注解能写在使用类型的任何语句中
+
+### 集合
+
+- 集合、数组都是对多个数据进行存储操作的结构，简称Java容器。
+
+- ![屏幕截图 2020-12-22 141432](resources/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202020-12-22%20141432.png)
+
+- Collection接口：单列集合，用来存储一个一个的对象
+  - list接口：存储无序的、可重复的数据
+    - ArrayList、LinkedList、Vector
+  - set接口：存储无序的、不可重复的数据
+    - HashSet、LinkedHashSet、TreeSet
+- Map接口：双列集合，用来存储一对（key-value）一对的数据
+  - HashMap、LinkedHashMap、TreeMap、HashTable、Properties
+- 集合元素的遍历操作，使用Iterator接口，使用内部的next()、hasNext()方法
+  - <span style='color:blue'>集合对象每次调用iterator()方法都得到一个全新的迭代器对象</span>，默认游标都在集合的第一个元素之前

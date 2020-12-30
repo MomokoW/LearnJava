@@ -796,15 +796,31 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 ### 集合
 
 - 集合、数组都是对多个数据进行存储操作的结构，简称Java容器。
-
 - ![屏幕截图 2020-12-22 141432](resources/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202020-12-22%20141432.png)
-
 - Collection接口：单列集合，用来存储一个一个的对象
-  - list接口：存储无序的、可重复的数据
-    - ArrayList、LinkedList、Vector
-  - set接口：存储无序的、不可重复的数据
-    - HashSet、LinkedHashSet、TreeSet
+  - list接口：存储<span style='color:red'>有序的、可重复的</span>数据
+    - ArrayList：作为List接口的主要实现类，线程不安全的，效率高，底层使用Object[]存储
+    - LinkedList：对于频繁的插入、删除操作，使用此类比ArrayList高，底层使用双向链表存储
+    - Vector：作为List接口的古老实现类，线程安全的，效率低，底层使用Object[]存储
+  - set接口：存储<span style='color:blue'>无序的、不可重复的</span>数据
+    - 无序性：<span style='color:blue'>不等于随机性。以HashSet为例说明，存储的数据在底层数组中并非按照数组索引的顺序添加，而是根据数据的哈希值</span>
+    - 不可重复性：保证添加的元素按照equals()判断时，不能返回true.即：相同的元素只能添加一个（其中要重写hashCode()方法）
+    - HashSet：作为Set接口的主要实现类，线程不安全的，可以存储null值
+      - LinkedHashSet：作为HashSet的子类，遍历其内部数据时，可以按照添加的顺序遍历
+    - TreeSet：底层使用红黑树存储，可以按照添加对象的指定属性，进行排序
 - Map接口：双列集合，用来存储一对（key-value）一对的数据
   - HashMap、LinkedHashMap、TreeMap、HashTable、Properties
 - 集合元素的遍历操作，使用Iterator接口，使用内部的next()、hasNext()方法
   - <span style='color:blue'>集合对象每次调用iterator()方法都得到一个全新的迭代器对象</span>，默认游标都在集合的第一个元素之前
+  - 内部定义了remove()，可以在遍历的是时候，删除集合中的元素。此方法不同于集合直接调用remove()
+- java 5.0提供了foreach循环迭代访问Collection和数组
+  - 遍历操作不需要获取Collection或数组的长度，无需使用索引访问元素。
+  - <span style='color:blue'>遍历集合的底层调用Iterator完成操作</span>
+
+- 向Set中添加的数据，其所在的类一定要重写hashCode()和equals()
+  - 要求：重写的hashCode()和equals()尽可能保持一致性：相等的对象必须要相等的散列码
+
+
+
+
+

@@ -1110,4 +1110,8 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 - 关闭外层流的同时，内层流也会自动的进行关闭。关于内层流的关闭，可以省略。
 - PrintStream打印的所有字符都使用平台默认字符编码转换为字节。在需要写入字符而不是写入字节的情况下，应该使用PrintWriter类
 - 打印流实现将基本数据类型的数据格式转化为字符串输出
-- 对象流：用于存储和读取<span style='color:blue'>基本数据类型数据</span>或<span style='color:blue'>对象</span>的处理流
+- 对象流：用于存储和读取<span style='color:blue'>基本数据类型数据</span>或<span style='color:blue'>对象</span>的处理流，可以把Java中的对象写入到数据源中，也能把对象从数据源中还原回来。
+  - ObjectInputStream和ObjectOutputStream不能序列化<span style='color:red'>static</span>和<span style='color:red'>transient</span>修饰的成员变量
+  - 如果需要让某个对象支持序列化机制，则该对象所属的类必须实现如下两个接口之一：
+    - <span style='color:red'>Serializable</span>：常用
+    - Externalizable

@@ -1,11 +1,14 @@
 package com.momoko.exer;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Created by momoko on 2021/1/14.
  */
-public class User {
+public class User implements Serializable {
+
+    public static final long serialVersionUID = 475463534532L;
 
     private int id;
     private int age;

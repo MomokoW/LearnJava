@@ -106,7 +106,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 
 #### Java定义的数据类型
 
-- 基本数据类型：byte(1)	short(2)	int(4)	long(8)	float(4)	double(8)	boolean(true or false)
+- 基本数据类型：byte(1)	short(2)   char(2)	int(4)	long(8)	float(4)	double(8)	boolean(true or false)
 
 - 引用数据类型：类(calss)     接口(interface)    数组(array)
 - <span style='color:green'>声明long型变量，必须以'l'或'L'结尾</span>
@@ -797,30 +797,317 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 
 - 集合、数组都是对多个数据进行存储操作的结构，简称Java容器。
 - ![屏幕截图 2020-12-22 141432](resources/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202020-12-22%20141432.png)
-- Collection接口：单列集合，用来存储一个一个的对象
-  - list接口：存储<span style='color:red'>有序的、可重复的</span>数据
-    - ArrayList：作为List接口的主要实现类，线程不安全的，效率高，底层使用Object[]存储
-    - LinkedList：对于频繁的插入、删除操作，使用此类比ArrayList高，底层使用双向链表存储
-    - Vector：作为List接口的古老实现类，线程安全的，效率低，底层使用Object[]存储
-  - set接口：存储<span style='color:blue'>无序的、不可重复的</span>数据
-    - 无序性：<span style='color:blue'>不等于随机性。以HashSet为例说明，存储的数据在底层数组中并非按照数组索引的顺序添加，而是根据数据的哈希值</span>
-    - 不可重复性：保证添加的元素按照equals()判断时，不能返回true.即：相同的元素只能添加一个（其中要重写hashCode()方法）
-    - HashSet：作为Set接口的主要实现类，线程不安全的，可以存储null值
-      - LinkedHashSet：作为HashSet的子类，遍历其内部数据时，可以按照添加的顺序遍历
-    - TreeSet：底层使用红黑树存储，可以按照添加对象的指定属性，进行排序
-- Map接口：双列集合，用来存储一对（key-value）一对的数据
-  - HashMap、LinkedHashMap、TreeMap、HashTable、Properties
+
+#### Collection接口：单列集合，用来存储一个一个的对象
+
+##### list接口：存储<span style='color:red'>有序的、可重复的</span>数据
+
+- ArrayList：作为List接口的主要实现类，线程不安全的，效率高，底层使用Object[]存储
+- LinkedList：对于频繁的插入、删除操作，使用此类比ArrayList高，底层使用双向链表存储
+- Vector：作为List接口的古老实现类，线程安全的，效率低，底层使用Object[]存储
+
+##### set接口：存储<span style='color:blue'>无序的、不可重复的</span>数据
+
+- 无序性：<span style='color:blue'>不等于随机性。以HashSet为例说明，存储的数据在底层数组中并非按照数组索引的顺序添加，而是根据数据的哈希值</span>
+- 不可重复性：保证添加的元素按照equals()判断时，不能返回true.即：相同的元素只能添加一个（其中要重写hashCode()方法）
+- HashSet：作为Set接口的主要实现类，线程不安全的，可以存储null值
+  - LinkedHashSet：作为HashSet的子类，遍历其内部数据时，可以按照添加的顺序遍历
+- TreeSet：底层使用红黑树存储，可以按照添加对象的指定属性，进行排序
+
 - 集合元素的遍历操作，使用Iterator接口，使用内部的next()、hasNext()方法
   - <span style='color:blue'>集合对象每次调用iterator()方法都得到一个全新的迭代器对象</span>，默认游标都在集合的第一个元素之前
   - 内部定义了remove()，可以在遍历的是时候，删除集合中的元素。此方法不同于集合直接调用remove()
 - java 5.0提供了foreach循环迭代访问Collection和数组
   - 遍历操作不需要获取Collection或数组的长度，无需使用索引访问元素。
   - <span style='color:blue'>遍历集合的底层调用Iterator完成操作</span>
-
-- 向Set中添加的数据，其所在的类一定要重写hashCode()和equals()
+- <span style='color:red'>向Set中添加的数据，其所在的类一定要重写hashCode()和equals()</span>
   - 要求：重写的hashCode()和equals()尽可能保持一致性：相等的对象必须要相等的散列码
+- 向TreeSet中添加的数据，要求是同类的对象
+  - 向TreeSet中添加的自定义类需要实现比较方式：自然排序（实现Comparable接口）和定制排序（Comparator）
+  - 自然排序中，比较两个对象是否相同的标准为：compareTo()返回0。不再是equals()。
+- <span style='color:red'>Set添加元素的过程：以HashSet为例：</span>
+
+  - 向HashSet中添加元素a，首先调用元素a所在类的hashCode()方法，计算a的哈希值，此哈希值接着通过某种算法计算出在HashSet底层数组中的存放位置（即为：索引位置），判断数组此位置上是否已经有元素：
+
+    - 如果此位置上没有其他元素，则元素a添加成功。  ——>情况1
+    - 如果此位置上有其他元素b（或以链表形式存在着多个元素），则比较元素a与元素b的hash值:
+      - 如果hash值不相同，则元素a添加成功。  ——>情况2
+      - 如果hash值相同，进而需要调用元素a所在类的equals()方法：
+        - equals()返回true，元素a添加失败
+        - equals()返回false，则元素a添加成功   ——>情况2
+
+    - 对于添加成功的情况2和情况3而言：元素a与已经存在指定索引位置上数据以链表的方式存储。（jdk7和jdk8指向方式有所不同）
+- <span style='color:red'>Set的remove方法也会先调用a的hashCode()方法判断底层数组上是否有该元素，如果有则删除成功，没有就删除失败</span>。
+
+##### Map接口：双列集合，用来存储一对（key-value）一对的数据
+
+- HashMap：作为Map的主要实现类，线程不安全的，效率高；可以存储null的key和value
+  
+  - LinkedHashMap：保证在遍历map元素时，可以按照添加的顺序实现遍历。原因：在原有的HashMap底层结构基础上，添加了一对指针，指向前一个和后一个元素。对于频繁的遍历操作，此类执行效率高于HashMap。
+  
+- TreeMap：保证按照添加的key-value对进行排序，实现排序遍历。此时考虑key的自然排序或定制排序，底层使用红黑树
+
+  - 要求key必须是由同一个类创建的对象，因为要按照key进行排序
+
+- HashTable：作为古老的实现类，线程安全的，效率低；不能存储null的key和value
+  
+  - Properties：常用来处理配置文件。<span style='color:red'>key和value都是String类型</span>
+  
+- Map结构的理解（以HashMap为例）：
+
+  - Map中的key：无序的、不可重复的，使用Set存储所有的key  ——><span style='color:blue'>key所在的类要重写equals()和hashCode()  </span>
+  - Map中的value：无序的、不可重复的，使用Collection存储所有的value    ——><span style='color:blue'>value所在的类要重写equals()</span>
+  - Map中每put一对key和value，实质上是put一个Entry，Entry中有key和value属性，相应地，Entry是无序不可重复的。
+
+- <span style='color:red'>HashMap的底层实现原理（以jdk7为例说明）</span>
+
+- ```java
+  HashMap map = new HashMap();
+  在实例化以后，底层创建了长度是16的一维数组Entry[] table.
+  ...可能已经执行过多次put...
+  map.put(key1,value1);
+  首先，调用key1所在类的hashCode()计算key1的哈希值，此哈希值经过某种算法计算以后，得到在Entry数组中的存放位置
+  如果此位置上的数据为空，此时的key1-value1添加成功(Entry添加成功)  ---->情况1
+  如果此位置上的数据不为空，比较key1和已经存在的一个或多的数据的哈希值：
+      如果key1的哈希值与已经存在的数据的哈希值都不相同，此时key1-value1添加成功。  ---->情况2
+      如果key1的哈希值和已经存在的某一个数据(key2-value2)的哈希值相同，继续比较：调用key1所在类的equals(key2)方法，比较：
+          如果equals返回false：此时key1-value1添加成功  ---->情况3
+          如果equals返回true：使用value1替换value2
+      补充：关于情况2和情况3，此时key1-value1和原来的数据以链表的方式存储
+      在不断的添加过程中，会涉及到扩容问题，当超出临界值（且要存放的位置非空时）默认的扩容方式：扩容为原来容量的2倍，并把原来的数据复制过来。
+  ```
+
+- <span style='color:red'>jdk8 相较于jdk7在底层实现方面的不同：</span>
+
+- ```Java
+  new HashMap():底层没有创建一个长度为16的数组
+  jdk8底层的数组是Node[]而非Entry[]
+  首次调用put()方法时，底层创建长度为16的数组
+  jdk7底层结构只有：数组+链表。jdk8中的底层结构：数组+链表+红黑树
+      当数组中的某一个索引位置上的元素以链表形式存在的个数 > 8 且当前的数组的长度 > 64时，
+      此时此索引位置上的所有数据改为使用红黑树存储。
+  DEFAULT_INITIAL_CAPACITY：HashMap的默认容量，16
+  MAXIMUM_CAPACITY：HashMap的最大支持容量，2^30
+  DEFAULT_LOAD_FACTOR：HashMap的默认加载因子，0.75f
+  TREEIFY_THRESHOLD：Bucket中链表长度大于该默认值，转化为红黑树，8
+  UNTREEIFY_THRESHOLD：Bucket中红黑树存储的Node小于该默认值，转化为链表，6
+  MIN_TREEIFY_CAPACITY：Bucket中Node被树化时最小的hash表容量，64
+  ```
+
+#### Collections工具类
+
+- <span style='color:red'>Collections是一个操作Set，List和Map等集合的工具类（可生成线程安全的List、Set和Map）</span>
+- 排序操作（均为static方法）(还有很多其他的方法，需要时了解)
+  - reverse(List)：反转List中元素的顺序
+  - shuffle(List)：对List集合元素进行随机排序
+  - sort(List)：根据元素的自然顺序对指定List集合元素按升序排序
+  - sort(List, Comparator)：根据指定的Comparator产生的顺序对List集合元素进行排序
+  - swap(List, int, int)：将指定list集合中的 i 处元素和 j 处元素进行交换
+
+### 泛型
+
+- 允许在定义类、接口时通过一个标识表示类中某个属性的类型或者是某个方法的返回值及参数类型。这个类型参数将在使用时（例如，继承或者实现这个接口，用这个类型声明变量、创建对象时）确定（即传入实际的类型参数，也称为类型实参）
+
+- <span style='color:red'>注意点：泛型的类型必须是类，不能是基本数据类型。需要用到基本数据类型的位置，拿包装类代替</span>
+
+- jdk7新特性：类型推断，Map<String, Integer> map = new HashMap<>();
+
+- 如何自定义泛型结构：泛型类、泛型接口；泛型方法
+
+  - 泛型类：public class Demo<T> {} ，T表示未知类型。
+  - 泛型接口：public interface ImplDemo<T,V>{} ，和定义类一样(接口就是一个特殊类)。
+  - 泛型方法：public <span style='color:blue'>\<T\></span>  void demo1(T name){System.out.println(name);} , public  <span style='color:blue'>\<T\></span> T demo2(T t){ return t;}
+    - 在方法中出现了泛型的结构，泛型参数与类的泛型参数没有任何关系
+    -  <span style='color:orange'>泛型方法所属的类是不是泛型类都没有关系</span>
+
+- 泛型类可能由多个参数，此时应该将多个参数一起放在尖括号内。如：<E1, E2, E3>
+
+- <span style='color:purple'>泛型类的构造器如下：public GenericClass(){}</span>
+
+- 如果泛型类是一个接口或抽象类，则不可创建泛型类的对象
+
+- 泛型的不同引用不能互相赋值
+
+- <span style='color:purple'>静态方法中不能使用类的泛型，但是泛型方法可以声明为静态的。原因：泛型参数是在调用方法时确定的，并非在实例化类时确定</span>
+
+- 异常类不能是泛型的
+
+- 通配符 <span style='color:purple'> ？ </span>的使用：
+
+  -  ```java
+    List<Objcet> list1 = null;
+    List<String> list2 = null;
+    List<?> list = null;
+    list = list1;   //可赋值
+    list = list2;
+    ```
+
+  - 添加：对于List<?>就不能向其内部添加数据，除了null之外 
+  
+  - 读取：允许读取数据，读取的数据类型为Object。
+  
+  - 注意点：
+  
+    - 不能用在泛型方法声明上，返回值类型前面不能使用
+    - 不能用在泛型类的声明上
+    -  不能用在创建对象上，右边属于创建集合对象
+       ArrayList\<?> list2 = new ArrayList<?>();
+  
+- 有限制条件的通配符使用
+
+  - ？ extends Number:只允许泛型为Number及Number子类的引用调用（≤）
+  - ？super Number:只允许泛型为Number及Number父类的引用调用（≥）
+  - ？ extends Comparable:只允许泛型实现Comparable接口的实现类的引用调用
+
+ ### IO流
+
+#### File类
+
+- File类的一个对象，代表一个文件或者一个文件目录
+
+  - createNewFile()：创建文件
+  - mkdir()：创建文件目录，如果此文件上层目录不存在，则创建失败
+  - mkdirs()：创建文件目录，如果上层文件目录不存在，一并创建
+  - delete()：删除文件或者文件夹
+  - exists()：文件或者文件夹是否存在
+
+- File类中设计到关于文件或文件目录的创建、删除、重命名、修改时间、文件大小等方法，并未涉及到写入或者读取文件内容的操作。如果需要读取或写入文件内容，必须使用IO流来完成。
+
+- IO流体系
+
+- ![image-20210114153442771](resources/image-20210114153442771.png)
+
+- <i>转自廖雪峰的Java教程IO一讲</i>
+
+- Java的IO标准库提供的<kbd>InputStream</kbd>根据来源可以包括：
+
+  - <kbd>FileInputStream</kbd>：从文件读取数据，是最终数据源；
+  - <kbd>-ServletInputStream</kbd>：从HTTP请求读取数据，是最终数据源；
+  - <kbd>Socket.getInputStream()</kbd>：从TCP连接读取数据，是最终数据源；
+  - ...
+
+- 如果我们要给<kbd>FileInputStream</kbd>添加缓冲功能，则可以从<kbd>FileInputStream</kbd>派生一个类：
+
+  ```BufferedFileInputStream extends FileInputStream```
+
+- 如果要给<kbd>FileInputStream</kbd>添加计算签名的功能，类似的，也可以从<kbd>FileInputStream</kbd>派生一个类：
+
+  ```DigestFileInputStream extends FileInputStream```
+
+- 如果要给<kbd>FileInputStream</kbd>添加加密/解密功能，还是可以从<kbd>FileInputStream</kbd>派生一个类：
+
+  ```CipherFileInputStream extends FileInputStream```
+
+- 如果要给<kbd>FileInputStream</kbd>添加缓冲和签名的功能，那么我们还需要派生<kbd>BufferedDigestFileInputStream</kbd>。如果要给<kbd>FileInputStream</kbd>添加缓冲和加解密的功能，则需要派生<kbd>BufferedCipherFileInputStream</kbd>。
+
+  我们发现，给<kbd>FileInputStream</kbd>添加3种功能，至少需要3个子类。这3种功能的组合，又需要更多的子类：
+
+  ```
+                            ┌─────────────────┐
+                            │ FileInputStream │
+                            └─────────────────┘
+                                     ▲
+               ┌───────────┬─────────┼─────────┬───────────┐
+               │           │         │         │           │
+  ┌───────────────────────┐│┌─────────────────┐│┌─────────────────────┐
+  │BufferedFileInputStream│││DigestInputStream│││CipherFileInputStream│
+  └───────────────────────┘│└─────────────────┘│└─────────────────────┘
+                           │                   │
+      ┌─────────────────────────────┐ ┌─────────────────────────────┐
+      │BufferedDigestFileInputStream│ │BufferedCipherFileInputStream│
+      └─────────────────────────────┘ └─────────────────────────────┘
+  
+  ```
+
+  
+
+  因此，直接使用继承，为各种<kbd>InputStream</kbd>附加更多的功能，根本无法控制代码的复杂度，很快就会失控。
+
+  为了解决依赖继承会导致子类数量失控的问题，JDK首先将<kbd>InputStream</kbd>分为两大类：
+
+  一类是直接提供数据的基础<kbd>InputStream</kbd>，例如：
+
+  - FileInputStream
+  - ByteArrayInputStream
+  - ServletInputStream
+  - ...
+
+    一类是提供额外附加功能的<kbd>InputStream</kbd>，例如：
+
+  - BufferedInputStream
+  - DigestInputStream
+  - CipherInputStream
+  - ...
+
+    当我们需要给一个“基础”<kbd>InputStream</kbd>附加各种功能时，我们先确定这个能提供数据源的<kbd>InputStream</kbd>，因为我们需要的数据总得来自某个地方，例如，<kbd>FileInputStream</kbd>，数据来源自文件：
+
+  ```InputStream file = new FileInputStream("com.momoko.test.gz");```
+  紧接着，我们希望<kbd>FileInputStream</kbd>能提供缓冲的功能来提高读取的效率，因此我们用<kbd>BufferedInputStream</kbd>包装这个<kbd>InputStream</kbd>，得到的包装类型是<kbd>BufferedInputStream</kbd>，但它仍然被视为一个<kbd>InputStream</kbd>：
+
+  ```InputStream buffered = new BufferedInputStream(file);```
+  最后，假设该文件已经用gzip压缩了，我们希望直接读取解压缩的内容，就可以再包装一个<kbd>GZIPInputStream</kbd>：
+
+  ```InputStream gzip = new GZIPInputStream(buffered);```
+  无论我们包装多少次，得到的对象始终是<kbd>InputStream</kbd>，我们直接用<kbd>InputStream</kbd>来引用它，就可以正常读取：
+
+  ```
+  ┌─────────────────────────┐
+  │GZIPInputStream          │
+  │┌───────────────────────┐│
+  ││BufferedFileInputStream││
+  ││┌─────────────────────┐││
+  │││   FileInputStream   │││
+  ││└─────────────────────┘││
+  │└───────────────────────┘│
+  └─────────────────────────┘
+  
+  ```
+
+  上述这种通过一个“基础”组件再叠加各种“附加”功能组件的模式，称之为Filter模式（或者装饰器模式：Decorator）。它可以让我们通过少量的类来实现各种功能的组合：
+
+  ```                       
+                   ┌─────────────┐
+                   │ InputStream │
+                   └─────────────┘
+                         ▲ ▲
+  ┌────────────────────┐ │ │ ┌─────────────────┐
+  │  FileInputStream   │─┤ └─│FilterInputStream│
+  └────────────────────┘ │   └─────────────────┘
+  ┌────────────────────┐ │     ▲ ┌───────────────────┐
+  │ByteArrayInputStream│─┤     ├─│BufferedInputStream│
+  └────────────────────┘ │     │ └───────────────────┘
+  ┌────────────────────┐ │     │ ┌───────────────────┐
+  │ ServletInputStream │─┘     ├─│  DataInputStream  │
+  └────────────────────┘       │ └───────────────────┘
+                               │ ┌───────────────────┐
+                               └─│CheckedInputStream │
+                                 └───────────────────┘     
+  ```
 
 
+  类似的，<kbd>OutputStream</kbd>也是以这种模式来提供各种功能：
 
+  ```
+                    ┌─────────────┐
+                    │OutputStream │
+                    └─────────────┘
+                          ▲ ▲
+  ┌─────────────────────┐ │ │ ┌──────────────────┐
+  │  FileOutputStream   │─┤ └─│FilterOutputStream│
+  └─────────────────────┘ │   └──────────────────┘
+  ┌─────────────────────┐ │     ▲ ┌────────────────────┐
+  │ByteArrayOutputStream│─┤     ├─│BufferedOutputStream│
+  └─────────────────────┘ │     │ └────────────────────┘
+  ┌─────────────────────┐ │     │ ┌────────────────────┐
+  │ ServletOutputStream │─┘     ├─│  DataOutputStream  │
+  └─────────────────────┘       │ └────────────────────┘
+                                │ ┌────────────────────┐
+                                └─│CheckedOutputStream │
+                                  └────────────────────┘
+  
+  ```
 
-
+- 关闭外层流的同时，内层流也会自动的进行关闭。关于内层流的关闭，可以省略。
+- PrintStream打印的所有字符都使用平台默认字符编码转换为字节。在需要写入字符而不是写入字节的情况下，应该使用PrintWriter类
+- 打印流实现将基本数据类型的数据格式转化为字符串输出
+- 对象流：用于存储和读取<span style='color:blue'>基本数据类型数据</span>或<span style='color:blue'>对象</span>的处理流

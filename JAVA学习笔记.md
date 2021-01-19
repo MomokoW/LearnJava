@@ -1111,7 +1111,51 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 - PrintStream打印的所有字符都使用平台默认字符编码转换为字节。在需要写入字符而不是写入字节的情况下，应该使用PrintWriter类
 - 打印流实现将基本数据类型的数据格式转化为字符串输出
 - 对象流：用于存储和读取<span style='color:blue'>基本数据类型数据</span>或<span style='color:blue'>对象</span>的处理流，可以把Java中的对象写入到数据源中，也能把对象从数据源中还原回来。
-  - ObjectInputStream和ObjectOutputStream不能序列化<span style='color:red'>static</span>和<span style='color:red'>transient</span>修饰的成员变量
-  - 如果需要让某个对象支持序列化机制，则该对象所属的类必须实现如下两个接口之一：
+  - ObjectInputStream和ObjectOutputStream不能序列化<span style='color:red'>static</span>和<span style='color:red'>transient</span>修饰的成员变量，可以不用序列化的属性用这两个关键字修饰
+  - 如果需要让某个对象支持序列化机制，则该对象所属的类必须实现如下两个接口之一且该类中的所有属性都是可序列化的：
     - <span style='color:red'>Serializable</span>：常用
     - Externalizable
+  - 实现Serializable的对象需要有一个表示序列化版本标识符的静态变量：
+    - <span style='color:red'>private static final long serialVersionUID</span>
+    - 用来表明类的不同版本间的兼容性，如果类没有显式定义这个静态常量，它的值是Java运行时环境根据类的内部细节自动生成的。<span style='color:blue'>若类的实例变量做了修改，serialVersionUID可能发生变化，如：先序列化对象，后面改动了类的结构，再反序列化就会出错。</span>故建议，显式声明。
+  - 序列化和反序列化的顺序要一致，不然可能会出错
+
+#### RandomAccessFile
+
+- RandomAccessFile直接继承于java.lang.Object类，实现了DataInput和DataOutput接口
+- RandomAccessFile既可以作为一个输入流，也可以作为一个输出流
+- 如果RandomAccessFile作为输出流时，写出到的文件如果不存在，则在执行过程中自动创建，如果写出到的文件存在，则会对原有文件内容进行覆盖（默认情况下，从头覆盖）
+  - "abcdef"写入"123"则文件变为"123def"
+- RandomAccessFile支持“随机访问”模式，程序可以直接跳到文件的任意地方来读、写文件
+  - 支持只访问文件的部分内容
+  - 可以向已存在的文件后追加内容
+- RandomAccessFile对象包含一个记录指针，用以标示当前读写处的位置。可自由移动指针：
+  - long getFilePointer()：获取文件记录指针的当前位置
+  - void seek(long pos)：将文件记录指针定位到pos位置
+
+#### 网络编程
+
+- 127.0.0.1：localhost，本地回路地址
+- 实例化InetAddress
+  - getByName(String host)：host可为域名或者ip地址
+  - 常用方法：getHostName() / getHostAddress()分别获取主机的域名和主机ip地址
+- 端口号标识正在计算机上运行的进程（程序）
+  - 不同的进程有不同的端口号
+  - 被规定为一个16位的整数0~65535
+  - 端口分类：
+    - <span style='color:red'>公认端口：</span>0~1023。被预先定义的服务通信占用（HTTP占用端口80，FTP占用端口21，Telnet占用端口23）
+    - <span style='color:red'>注册端口：</span>1024~49151。分配给用户进程或者应用程序（Tomcat占用端口8080，MySQL占用端口3306，Oracle占用端口1521等）
+    - <span style='color:red'>动态/私有端口：</span>49152~65535
+
+- 端口号与IP地址的组合得出一个网络套接字：Socket
+- 创建客户端步骤：
+  - 创建Socket对象，指明服务器端的ip和端口号
+  - 获取一个输出流，用于输出数据
+  - 写出数据的操作
+  - 资源的关闭
+- 创建服务器端的步骤：
+  - 创建服务器端的ServerSocket，指明自己的端口号
+  - 调用accept()表示接收来自于客户端的socket
+  - 获取输入流
+  - 读取输入流中的数据
+  - 资源的关闭

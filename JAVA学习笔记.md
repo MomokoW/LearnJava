@@ -1168,7 +1168,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 
 - 反射机制与面向对象中的封装性是不是矛盾的？如何看待两个技术？
 
-  - 不矛盾，封装体现的是暴露出来的方法已经可用了，不让调用的方法可能已经被暴露的方法使用过了，但是反体现的就是你想调用还是让你调用。
+  - 不矛盾，封装体现的是暴露出来的方法已经可用了，不让调用的方法可能已经被暴露的方法使用过了，但是反射体现的就是你想调用还是让你调用。
 
 - 关于java.lang.Class类的理解
 
@@ -1194,5 +1194,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
   Person obj = class.newInstance();
   ```
 
-  
+- getFields()：获取当前运行时类及其父类中声明为public访问权限的属性
+- getDeclaredFields()：获取当前运行时类中声明的所有属性（不包含父类中声明的属性）
+- <span style="color:blue">同理可以获取方法、注解，构造器等等</span>，但是getConstructor()只能获取当前运行时类中声明为public的构造器
 

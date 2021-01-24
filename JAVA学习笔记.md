@@ -1198,3 +1198,218 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 - getDeclaredFields()：获取当前运行时类中声明的所有属性（不包含父类中声明的属性）
 - <span style="color:blue">同理可以获取方法、注解，构造器等等</span>，但是getConstructor()只能获取当前运行时类中声明为public的构造器
 
+#### 代理模式
+
+- 使用一个代理将对象包装起来，然后用该代理对象取代原始对象。任何对原始对象的调用都要通过代理。代理对象决定是否以及何时将方法调用转到原始对象上。 
+- 动态代理是指客户通过代理类来调用其它对象的方法，并且是在程序运行时根据需要动态创建目标类的代理对象 
+- <span style='color:red'>体会：</span>
+  - 静态代理：代理类与被代理类需要实现同一接口
+  - 动态代理：无需显式写出代理类，代理类也无需实现接口，通过反射创造目标类的代理对象，同时该代理对象仍然是调用被代理类中的方法
+
+### Java8 新特性
+
+#### lambda表达式
+
+- 举例：(o1, o2) -> Integer.compare(o1, o2)
+
+- 格式：
+  - lambda操作符 或 箭头操作符
+  - 左边：lambda形参列表（其实就是接口中的抽象方法的形参列表）
+  - 右边：lambda体（其实就是重写的抽象方法的方法体）
+
+- 语法格式一：无参，无返回值
+
+  ```java
+  Runnable r1 = () -> {System.out.println("lambda表达式")}
+  ```
+
+- 语法格式二：lambda需要一个参数，但是没有返回值
+
+  ```java
+  Consumer<String> con = (String str) -> {System.out.println(str)}
+  ```
+
+- 语法格式三：<span style='color:red'>数据类型可以省略，</span>因为可以由编译器推断得出，称为”类型推断“
+
+  ```java
+  Consumer<String> con = (str) -> {System.out.println(str)}
+  ```
+
+- 语法格式四：lambda若只需要一个参数时，<span style='color:red'>参数的小括号可以省略</span>
+
+  ```java
+  Consumer<String> con = str -> {System.out.println(str)}
+  ```
+
+- 语法格式五：lambda需要两个或以上的参数，多条执行语句，并且可以有返回值
+
+  ```java
+  Comparator<Integer> com = (x,y) -> {
+      System.out.println("实现函数式接口方法!");
+      return Integer.compare(x,y);
+  }
+  ```
+
+- 语法格式六：当lambda体<span style='color:red'>只有一条语句时，return与大括号若有，</span>都可以省略，return和大括号一起省略
+
+  ```java
+  Comparator<Integer> com = (x,y) -> Integer.compare(x,y);
+  ```
+
+#### 函数式（Functional）接口
+
+- lambda表达式的本质：作为函数式接口的实例
+
+- 如果一个接口中，只声明了一个抽象方法，则此接口就称为函数式接口
+
+- 函数式接口的定义
+  > An informative annotation type used to indicate that an interface type declaration is intended to be a <i>functional interface</i> as defined by the Java Language Specification.
+  > Conceptually, a functional interface has exactly one abstract method.  Since {@linkplain java.lang.reflect.Method#isDefault() default methods} have an implementation, they are not abstract.  If an interface declares an abstract method overriding one of the public methods of {@code java.lang.Object}, that also does <em>not</em> count toward the interface's abstract method count since any implementation of the interface will have an implementation from {@code java.lang.Object} or elsewhere<p>Note that instances of functional interfaces can be created with  lambda expressions, method references, or constructor references.
+
+  > <p>If a type is annotated with this annotation type, compilers are
+  > required to generate an error message unless:
+  > <ul>
+  > <li> The type is an interface type and not an annotation type, >enum, or class.
+  > <li> The annotated type satisfies the requirements of a functional interface.
+  > </ul>
+  > <p>However, the compiler will treat any interface meeting the
+  > definition of a functional interface as a functional interface
+  > regardless of whether or not a {@code FunctionalInterface}
+  > annotation is present on the interface declaration.
+
+- 从这段解释里面我们可以提取到几个要点
+
+  *  首先这个注解是定义在接口上面的
+  * 第二，接口由这个注解定义的接口应该有且仅有一个抽象方法，但是由于Java8引入了接口的default方法，default方法有实现，所以不算抽象方法，如果接口覆写了object的一个public方法，也不计算在这个抽象方法的名额里面，因为所有的接口的实现都会实现object的方法。
+  * 第三，函数式接口的实例可以<kbd>lambda expressions, method references, or constructor references</kbd>的形式出现
+  * 第四，不在以上范围内的接口如果使用了FunctionalInterface注解，编译器会报错
+  * 最后，虽然有些接口没有加上FunctionalInterface注解，但是编译器会把满足函数式接口的定义的接口看作FunctionalInterface，也就是说这些接口的实例也可以用lambda表达式的形式来写。
+
+- 也就是说，所有满足函数式接口的接口的实例都可以变为lambda表达式，不满足的则会在创建的时候报错。
+
+#### 方法引用和构造器引用
+
+- 使用情境：当要传递给lambda体的操作，已经有实现的方法了，可以使用方法引用
+- 使用格式：类（或对象）：：方法名
+- 具体分为如下的三种情况：
+  - 对象：：非静态方法
+  - 类：：静态方法
+  - 类：：非静态方法 
+- 方法引用使用的要求：<span style='color:blue'>实现接口的抽象方法的参数列表和返回类型，必须与方法引用的方法的参数列表和返回值类型保持一致</span>（针对情况一和情况二），第三种情况，只要lambda体为参数列表的第一个参数调用第二个参数的情况，就可变为方法引用。
+
+- 构造器引用
+  - 和方法引用类似，函数式接口的抽象方法的形参列表和构造器的形参列表一致，抽象方法的返回值类型即为构造器所属的类的类型
+
+- ```java
+  Supplier<Apple> sup1 = Apple::new;
+  ```
+
+- 数组引用：把数组看作特殊的类，即可使用构造器引用
+
+  ```java
+  Function<Integer,String[]> fun1 = length -> new String[length];
+  String[] arr1 = fun1.apply(5);
+  System.out.println(Arrays.toString(arr1));
+  
+  Function<Integer,String[]> func2 = String[]::new;
+  String[] arr2 = func2.apply(10);
+  System.out.println(Arrays.toString(arr2));
+  ```
+
+#### Stream API
+
+- Stream和Collection集合的区别：<span style='color:blue'>Collection是一种静态的内存数据结构，而Stream是有关计算的。</span>前者是主要面向内存，存储在内存中，后者主要是面向CPU，通过CPU实现计算。
+
+- Stream：是数据渠道，用于操作数据源（集合、数组等）所生成的元素序列。<span style='color:blue'>“集合讲的是数据，Stream讲的是计算”</span>
+- <span style='color:red'>注意</span>
+  - Stream自己不会存储元素
+  - Stream不会改变源对象，会返回一个持有结构的新Stream
+  - Stream操作是延迟执行的，这意味这他们会等到需要结果的时候才执行
+
+Stream的操作三个步骤
+
+- <span style='color:red'>创建Stream</span>
+  - 一个数据源（如：集合、数组），获取一个流
+- <span style='color:red'>中间操作</span>
+  - 一个中间操作，对数据源的数据进行处理
+- <span style='color:red'>终止操作（终端操作）</span>
+  - 一旦执行终止操作，就执行中间操作链，并产生结果，之后，不会再被使用
+
+##### 创建Stream的方式
+
+- 方式一：通过集合，java8中的Collection接口被扩展
+  - <span style='color:red'>default Stream\<E>  stream()：返回一个顺序流</span>
+  - <span style='color:red'>default Stream\<E> parallelStream()：返回一个并行流</span>
+- 方式二：Arrays的静态方法stream()可以获取数组流
+  - <span style='color:red'>static \<T> Stream \<T> stream(T[] array)：返回一个流</span>
+- 方式三：通过Stream的of()
+  - <span style='color:red'>public static \<T> Stream \<T> of(T... values)：返回一个流</span>
+- 方式四：创建无限流
+  - 迭代：<span style='color:red'>public static\<T> Stream\<T> iterate(final T seed, final UnaryOperator\<T> f) </span>
+  - 生成：<span style='color:red'>public static\<T> Stream\<T> generate(Supplier<? extends T> s)</span>
+
+##### Stream的中间操作
+
+- 筛选与切片
+- ![image-20210124152502114](\resources\image-20210124152502114.png)
+
+- 映射
+- ![image-20210124152531334](\resources\image-20210124152531334.png)
+
+- 排序
+- ![image-20210124152553464](\resources\image-20210124152553464.png)
+
+##### Stream的终止操作
+
+- 终端操作会从流的流水线生成结果。其结果可以是任何不是流的值，例如： List 、 Integer ，甚至是 void 。
+
+- 匹配与查找
+- ![image-20210124152657899](\resources\image-20210124152657899.png)
+
+- ![image-20210124152720837](\resources\image-20210124152720837.png)
+
+- 规约
+- ![image-20210124152748750](\resources\image-20210124152748750.png)
+
+- 收集
+- ![image-20210124152823746](\resources\image-20210124152823746.png)
+
+##### Optional\<T>类
+
+- 可以保存类T的值，代表这个值存在，或者仅仅保存null，表示这个值不存在。可以避免空指针异常。如果值存在则isPresent()方法会返回true，调用get()方法会返回该对象
+- Optional 提供很多有用的方法，这样我们就不用显式进行空值检测 。
+  - 创建 Optional 类对象的方法：
+    - <span style='color:red'>Optional.of(T t) : 创建一个 Optional 实例， t 必须非空</span>
+    - <span style='color:red'>Optional.empty() : 创建一个空的 Optional 实例</span>
+    - <span style='color:red'>Optional.ofNullable(T t) t 可以为 null</span>
+  - 判断 Optional 容器中是否包含对象：
+    - <span style='color:red'>boolean isPresent() : 判断是否包含对象</span>
+    - void ifPresent(Consumer<? super T> consumer) 如果有值，就执行 Consumer接口的实现代码，并且该值会作为参数传给它。获取 Optional 容器的对象：
+    - <span style='color:red'>T get(): 如果调用对象包含值，返回该值，否则抛异常</span>
+    - <span style='color:red'>T orElse(T other) 如果有值则将其返回，否则返回指定的 other 对象。</span>
+    - T orElseGet(Supplier<? extends T> other) 如果有值则将其返回，否则返回由Supplier 接口实现提供的对象。
+    - T orElseThrow(Supplier<? extends X> exceptionSupplier) 如果有值则将其返回，否则抛出由 Supplier 接口实现提供的异常 。
+
+### Java9新特性
+
+#### 模块化系统
+
+- 用模块来管理各个package，通过声明某个package暴露。模块的概念，其实就是package外再裹一层，不声明默认就是隐藏。因此，模块化使得代码组织上更安全，因为它可以指定哪些部分可以暴露，哪些部分隐藏。
+
+- 在module的src目录下新建module-info.java
+
+- ```java
+  //需要使用别的模块的调用方式
+  module day13 {
+      requires java9test;
+  }
+  ```
+
+- ```java
+  //暴露自己让别人使用的模块
+  module java9test {
+      exports com.momoko.bean;
+  }
+  ```
+
+- 

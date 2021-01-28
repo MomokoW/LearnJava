@@ -350,7 +350,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
     - 全局常量：public static final的，书写时可以省略不写
     - 抽象方法：public abstract的
   - JDK8，除了定义全局常量和抽象方法之外，<span style='color:blue'>还可以定义静态方法，默认方法</span>
-    - 接口中定义的静态方法，只能通过接口来调用
+    - <span style='color:red'>接口中定义的静态方法，只能通过接口来调用</span>
     - default 方法可被实现类直接调用
     - 如果实现类重写了接口中的默认方法，调用时，仍然调用的是重写后的方法
     - 如果子类（或实现类）继承的父类和实现的接口中声明了同名同参数的方法，子类在没有重写此方法的情况下，默认调用的是父类中同名同参数方法。 
@@ -1298,8 +1298,9 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 - 方法引用使用的要求：<span style='color:blue'>实现接口的抽象方法的参数列表和返回类型，必须与方法引用的方法的参数列表和返回值类型保持一致</span>（针对情况一和情况二），第三种情况，只要lambda体为参数列表的第一个参数调用第二个参数的情况，就可变为方法引用。
 
 - 构造器引用
-  - 和方法引用类似，函数式接口的抽象方法的形参列表和构造器的形参列表一致，抽象方法的返回值类型即为构造器所属的类的类型
-
+  
+- 和方法引用类似，函数式接口的抽象方法的形参列表和构造器的形参列表一致，抽象方法的返回值类型即为构造器所属的类的类型
+  
 - ```java
   Supplier<Apple> sup1 = Apple::new;
   ```
@@ -1412,4 +1413,58 @@ Stream的操作三个步骤
   }
   ```
 
-- 
+#### Java的REPL工具：jShell命令
+
+- REPL（read - evaluate - print - loop）
+- 命令行输入：jshell之后就可以像python一样命令行交互了
+
+#### 接口的私有方法
+
+- Java9接口中的方法的访问权限修饰符可以声明为private的
+
+#### try语句的升级
+
+- java8实现了资源的自动关闭，但是要求执行后必须关闭的所有资源必须在try子句中初始化。Java9在try中可以使用已经初始化过的资源，此时的资源是final的
+
+#### 创建只读集合
+
+- List.of()，同样的其他集合也可以
+- Collections.unmodifiablelist(list)
+
+#### InputStream增强
+
+- InputStream的实例直接调用transferTo方法，可以用来将数据直接传输到OutputStream
+
+#### 增强的Stream API
+
+- takeWhile()： 返回从开头开始的按照指定规则尽量多的元素
+- dropWhile()：与takeWhile相反，返回剩余的元素
+- Java 8中Stream不能完全为null，否则会报空指针异常，Java 9的ofNullable方法允许创建一个单元素Stream，可以包含一个非空元素，也可以创建一个空Stream
+
+#### Optional提供了新的方法stream()
+
+### Java 10的新特性
+
+#### 局部变量类型推断
+
+- 声明变量时，根据所赋值的值，推断变量的类型
+
+- ```java
+  var num = 10;
+  ```
+
+- 遍历操作
+
+- ```java
+  for(var i : list) {
+  	System.out.println(i);
+  }
+  ```
+
+- <span style='color:red'>局部变量不赋值，就不能实现类型的推断</span>
+
+- lambda表达式中，左边的函数式接口不能声明为var
+
+- 方法引用中，左边的函数式接口不能声明为var
+
+  

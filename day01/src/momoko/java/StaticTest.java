@@ -23,8 +23,8 @@ class A {
 }
 
 class B extends A {
-//    static int num = 2;
-//    public void method () {
-//        System.out.println(num);
-//    }
+    static int num = 3;
+    public void method () {
+        System.out.println(num);
+    }
 }

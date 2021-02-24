@@ -444,7 +444,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
   1. 创建一个继承于Thread类的子类
   2. 重写Thread类中的run方法
   3. 创建Thread类的子类的对象
-  4. 通过此对象调用start()方法,，start方法有如下两个作用
+  4. 通过此对象调用start()方法，start方法有如下两个作用
      - 启动当前线程
      - 调用当前线程的run()
 
@@ -1365,15 +1365,15 @@ Stream的操作三个步骤
 - 终端操作会从流的流水线生成结果。其结果可以是任何不是流的值，例如： List 、 Integer ，甚至是 void 。
 
 - 匹配与查找
-- ![image-20210124152657899](\resources\image-20210124152657899.png)
+- ![image-20210124152657899](resources\image-20210124152657899.png)
 
-- ![image-20210124152720837](\resources\image-20210124152720837.png)
+- ![image-20210124152720837](resources\image-20210124152720837.png)
 
 - 规约
-- ![image-20210124152748750](\resources\image-20210124152748750.png)
+- ![image-20210124152748750](resources\image-20210124152748750.png)
 
 - 收集
-- ![image-20210124152823746](\resources\image-20210124152823746.png)
+- ![image-20210124152823746](resources\image-20210124152823746.png)
 
 ##### Optional\<T>类
 

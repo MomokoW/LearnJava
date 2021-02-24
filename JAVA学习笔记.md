@@ -1467,4 +1467,22 @@ Stream的操作三个步骤
 
 - 方法引用中，左边的函数式接口不能声明为var
 
-  
+### JUC
+
+- 内存可见性问题是，当多个线程操作共享数据时，彼此不可见
+
+#### volatile关键字
+
+- 当多个线程进行操作共享数据时，<span style='color:orange'>可以保证内存中的数据可见</span>（调用计算机底层代码，内存栅栏，及时把线程中缓存的数据更新，就相当于在主存中操作数据）相较于synchronized关键字是一种较为轻量级的同步策略
+- <span style='color:red'>volatile不具备”互斥性“</span>
+- <span style='color:red'>volatile不能保证变量的”原子性“</span>
+- 原子变量：在 java.util.concurrent.atomic 包下提供了一些原子变量。
+  - volatile 保存内存可见性
+  - CAS （Compare-And-Swap） 算法保证数据变量的原子性
+  - CAS 算法是硬件对于并发操作的支持
+  - CAS 包含了三个操作数：
+    *        ①内存值  V
+    *        ②预估值  A
+    *        ③更新值  B
+    *        当且仅当 V == A 时， V = B; 否则，不会执行任何操作。
+

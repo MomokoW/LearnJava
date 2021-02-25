@@ -200,6 +200,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
   - 定义变量的格式：数据类型 变量名 = 变量值
   - 先声明，后使用
   - 变量都有其对应的作用域
+  
 - 不同点
   - 在类中声明的位置不同
   - 属性：直接定义在类的一对{}内
@@ -211,6 +212,18 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 - 在内存中的加载位置
   - 属性加载到堆空间中（非static）
   - 局部变量加载到栈空间中
+  
+- #### 属性赋值
+
+- 对属性可以赋值的位置：
+
+  1. 默认初始化
+  2. 显式初始化
+  3. 在代码块中初始化
+  4. 构造器中初始化
+  5. 有了对象以后，可以通过”对象.属性“或”对象.方法“的方式，进行赋值
+
+- <span style='color:red'>执行的先后顺序：1->2/3->4->5，2和3在于定义时语句的先后顺序</span>
 
 #### JVM内存解析
 
@@ -526,10 +539,12 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
   - 方法可以抛出异常
   - 支持泛型的返回值
   - 需要借助FutureTask类，比如获取返回结果
+  
 - Future接口
   - 可以对具体Runnable、Callable任务的执行结果进行取消、查询是否完成、获取结果等。
   - <span style='color:blue'>FutureTask是Future的具体实现</span>
   - FutureTask同时实现了Runnable，Future接口，它既可以作为Runnable被线程实行，又可以作为Future得到Callable的返回值。
+  
 - 步骤：
 
   1. 创建一个实现Callable的实现类
@@ -538,18 +553,28 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
   4. 将此对象作为参数传递到FutureTask的构造器中，创建FutureTask的对象
   5. 将FutureTask的对象作为参数传递到Thread类的构造器中，创建Thread对象，并调用start()
   6. 获取Callable方法中返回值
+  
 - **方式四**：使用线程池
-- 提前创建好多个线程，放入线程池中，使用时直接获取，使用完放回池中，可以避免频繁创建销毁，实现重复利用。
-- ExecutorService：真正的线程池接口。常见子类ThreadPoolExecutor
 
+- 提前创建好多个线程，放入线程池中，使用时直接获取，使用完放回池中，可以避免频繁创建销毁，实现重复利用。
+
+- ExecutorService：真正的线程池接口。线程池的实现类ThreadPoolExecutor
+
+- |--ScheduledExecutorService 子接口：负责线程的调度
+
+  *           |--ScheduledThreadPoolExecutor ：继承 ThreadPoolExecutor， 实现 ScheduledExecutorService
+  
   - void execute(Runnable command)：执行任务/命令，没有返回值，一般用来执行Runnable
   - <T>Future<T> submit(Callable<T> task)：执行任务，有返回值，一般用来执行Callable
   - void shutdown()：关闭连接池
+  
 - Executors：工具类、线程池的工厂类，用于创建并返回不同类型的线程池
 
   - Executors.newCachedThreadPool()：创建一个可根据需要创建新线程的线程池
   - Executors.newFixedThreadPool(n)：创建一个可重用固定线程数的线程池
   - Executors.newSingleThreadExecutor()：创建一个只有一个线程的线程池
+  
+- ScheduledExecutorService newScheduledThreadPool() : 创建固定大小的线程，可以延迟或定时的执行任务。
 
 #### 线程同步
 
@@ -584,7 +609,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 
 - 从JDK5.0开始，JAVA提供通过显式定义同步锁对象来实现同步。同步锁使用Lock对象充当。
 
-- ReentrantLock可以替代synchronized进行同步；ReentrantLock获取锁更安全；必须先获取到锁，再进入try {...}代码块，最后使用finally保证释放锁； 可以使用tryLock()尝试获取锁。
+- <span style='color:blue'>ReentrantLock可以替代synchronized进行同步；</span>ReentrantLock获取锁更安全；必须先获取到锁，再进入try {...}代码块，最后使用finally保证释放锁； 可以使用tryLock()尝试获取锁。
 
 - ```Java
   class Window5 implements Runnable {
@@ -627,12 +652,6 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 - notifyAll()：一旦执行此方法，就会唤醒被wait的所有线程
 
 - <span style='color:red'>上述三个方法必须使用在同步代码块或者同步方法中，且三个方法的调用者必须是同步代码块或同步方法中的同步监视器</span>
-
-- 创建JAVA类进行单元测试，此JAVA类要求：
-  * 此类是public的
-  * 此类提供公共的无参的构造器
-    * 单元测试方法权限是public且没有返回值类型，没有形参
-  * 此单元测试方法上需要声明注解，@Test
 
 ### 常用类
 
@@ -1474,15 +1493,68 @@ Stream的操作三个步骤
 #### volatile关键字
 
 - 当多个线程进行操作共享数据时，<span style='color:orange'>可以保证内存中的数据可见</span>（调用计算机底层代码，内存栅栏，及时把线程中缓存的数据更新，就相当于在主存中操作数据）相较于synchronized关键字是一种较为轻量级的同步策略
+
 - <span style='color:red'>volatile不具备”互斥性“</span>
-- <span style='color:red'>volatile不能保证变量的”原子性“</span>
+
+- <span style='color:red'>volatile不能保证变量的”原子性“</span>（暂时理解：原子性即对一个变量的几个操作是封装在一起的，比如i++这个操作在操作系统底层分为了三步，所以i = i++，如果i = 10，最后结果依然是10，联想到j = i++，此时j也是为10）
+
+  - ```java
+    int temp = i;
+    i = i + 1;
+    i = temp;
+    ```
+
 - 原子变量：在 java.util.concurrent.atomic 包下提供了一些原子变量。
   - volatile 保存内存可见性
   - CAS （Compare-And-Swap） 算法保证数据变量的原子性
   - CAS 算法是硬件对于并发操作的支持
   - CAS 包含了三个操作数：
-    *        ①内存值  V
-    *        ②预估值  A
-    *        ③更新值  B
+    *        ①内存值  V（首先从主存中读取的数据）
+    *        ②预估值  A（在改变数据时再次读取主存的数据，即期望的值）
+    *        ③更新值  B（数据进行操作后的值）
     *        当且仅当 V == A 时， V = B; 否则，不会执行任何操作。
+
+- CopyOnWriteArrayList/CopyOnWriteArraySet : “写入并复制”
+  
+  * 注意：添加操作多时，效率低，因为每次添加时都会进行复制，开销非常的大。并发迭代操作多时可以选择。
+
+#### CountDownLatch（闭锁）
+
+- 同步辅助类，在完成一组正在其他线程中执行的操作之前，它允许一个或多个线程一直等待
+- 闭锁可以延迟进程的进度直到其达终止状态，闭锁可以用来确保某些活动直到其他活动都完成才继续执行
+  - 确保某个计算在其所需要的所有资源都被初始化之后才继续执行
+  - 确保某个服务在其所依赖的所有其他服务都已经启动之后才启动
+  - 等待直到某个操作所有参与者都准备就绪再继续执行
+
+#### Condition（JDK 5.0后）
+
+- 在condition中，与wait，notify，notifyAll方法对应的分别是await，signal和signalAll
+- Condition实例实质上被绑定到一个锁上，要为特定Lock实例获得Condition实例，调用lock的newCondition()方法
+
+- 创建JAVA类进行单元测试，此JAVA类要求：
+  * 此类是public的
+  * 此类提供公共的无参的构造器
+    * 单元测试方法权限是public且没有返回值类型，没有形参
+  * 此单元测试方法上需要声明注解，@Test
+
+#### ReadWriteLock
+
+- 读写锁，可以通过ReadWriteLock.readLock获取读锁，通过ReadWriteLock.writeLock获取写锁，可以有多个线程同时读，但是只能有一个线程写，写写/读写需要互斥，读读不需要互斥。 
+
+#### 线程8锁
+
+* 题目：判断打印的 "one" or "two" ？
+* 1. 两个普通同步方法，两个线程，标准打印， 打印? //one  two
+* 2. 新增 Thread.sleep() 给 getOne() ,打印? //one  two
+* 3. 新增普通方法 getThree() , 打印? //three  one   two
+* 4. 两个普通同步方法，两个 Number 对象，打印?  //two  one
+* 5. 修改 getOne() 为静态同步方法，打印?  //two   one
+* 6. 修改两个方法均为静态同步方法，一个 Number 对象?  //one   two
+* 7. 一个静态同步方法，一个非静态同步方法，两个 Number 对象?  //two  one
+* 8. 两个静态同步方法，两个 Number 对象?   //one  two
+* 线程八锁的关键：
+* ①非静态方法的锁默认为  this,  静态方法的锁为 对应的 Class 实例
+* ②某一个时刻内，只能有一个线程持有锁，无论几个方法。
+
+#### Fork/Join（JDK 7.0)
 

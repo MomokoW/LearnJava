@@ -18,7 +18,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class TestLock {
 	
 	public static void main(String[] args) {
-		Ticket ticket = new Ticket();
+		Ticket1 ticket = new Ticket1();
 		
 		new Thread(ticket, "1号窗口").start();
 		new Thread(ticket, "2号窗口").start();
@@ -27,7 +27,7 @@ public class TestLock {
 
 }
 
-class Ticket implements Runnable{
+class Ticket1 implements Runnable{
 	
 	private int tick = 100;
 	

@@ -60,7 +60,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 
 **<span style='color:blue'>简单而言，使用JDK的开发工具完成的Java程序，交给JRE去运行</span>**
 
-![Java8.0_platform](\resources\Java8.0_platform.jpg)
+![Java8.0_platform](resources\Java8.0_platform.jpg)
 
 为什么必须写JAVA_HOME：Tomcat服务等在配置时会在path下找到JAVA_HOME的位置并调用其中的库函数，如果没有就会出错。
 
@@ -125,7 +125,7 @@ linkStyle 5 stroke:#f33,stroke-width:2px;
 #### Java运算符
 
 - 算术运算符
-- ![image-20201015155256320](C:\Users\11658\IdeaProjects\LearnJava\resources\image-20201015155256320.png)
+- ![image-20201015155256320](resources\image-20201015155256320.png)
 - 赋值运算符：=、+=、-=、*=、/=、%=  <span style='color:red'>支持连续赋值 但是要先分别定义</span>
 - 比较运算符：==、!=、<、>、<=、>=、instanceof
 - 逻辑运算符：&、&&、|、||、！、^、只能用于布尔运算
@@ -1371,13 +1371,13 @@ Stream的操作三个步骤
 ##### Stream的中间操作
 
 - 筛选与切片
-- ![image-20210124152502114](\resources\image-20210124152502114.png)
+- ![image-20210124152502114](resources\image-20210124152502114.png)
 
 - 映射
-- ![image-20210124152531334](\resources\image-20210124152531334.png)
+- ![image-20210124152531334](resources\image-20210124152531334.png)
 
 - 排序
-- ![image-20210124152553464](\resources\image-20210124152553464.png)
+- ![image-20210124152553464](resources\image-20210124152553464.png)
 
 ##### Stream的终止操作
 
@@ -1558,3 +1558,11 @@ Stream的操作三个步骤
 
 #### Fork/Join（JDK 7.0)
 
+- Fork/Join 框架：就是在必要的情况下，将一个大任务，进行拆分(fork)成若干个小任务（拆到不可再拆时），再将一个个的小任务运算的结果进行join 汇总。
+- ![image-20210225174235983](resources/image-20210225174235983.png)
+
+### Queue
+
+- 频繁的插入、删除操作：LinkedList
+- 频繁的随机访问操作：ArrayDeque
+- 未知的初始数据量：LinkedList
